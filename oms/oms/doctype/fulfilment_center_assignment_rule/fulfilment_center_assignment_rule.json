@@ -1,0 +1,203 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2022-03-29 10:14:04.932422",
+ "description": "Define Explicit Conditions",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "disable",
+  "for_warehouse",
+  "logic_sb",
+  "define_condition",
+  "logic_1",
+  "logic_2",
+  "logic_3",
+  "logic_4",
+  "cb_1",
+  "fulfilment_center_customer",
+  "fulfilment_center_project",
+  "fulfilment_center_country",
+  "fulfilment_center_brand",
+  "fulfilment_center_item",
+  "priority",
+  "rule_help"
+ ],
+ "fields": [
+  {
+   "default": "OMS.FR.#",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Series",
+   "options": "OMS.FR.#",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "disable",
+   "fieldtype": "Check",
+   "label": "Disable"
+  },
+  {
+   "fieldname": "for_warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "For Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "fulfilment_center_customer",
+   "fieldtype": "Table MultiSelect",
+   "label": "Fulfilment Center Customer",
+   "options": "Fulfilment Center Customer"
+  },
+  {
+   "fieldname": "fulfilment_center_country",
+   "fieldtype": "Table MultiSelect",
+   "label": "Fulfilment Center Country",
+   "options": "Fulfilment Center Country"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "fulfilment_center_project",
+   "fieldtype": "Table MultiSelect",
+   "label": "Fulfilment Center Project",
+   "options": "Fulfilment Center Project"
+  },
+  {
+   "fieldname": "fulfilment_center_brand",
+   "fieldtype": "Table MultiSelect",
+   "label": "Fulfilment Center Brand",
+   "options": "Fulfilment Center Brand"
+  },
+  {
+   "fieldname": "fulfilment_center_item",
+   "fieldtype": "Table MultiSelect",
+   "label": "Fulfilment Center Item",
+   "options": "Fulfilment Center Item"
+  },
+  {
+   "default": "0",
+   "fieldname": "priority",
+   "fieldtype": "Int",
+   "label": "Priority"
+  },
+  {
+   "fieldname": "rule_help",
+   "fieldtype": "HTML",
+   "label": "Fulfilment Center Rule Help"
+  },
+  {
+   "fieldname": "logic_sb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "logic_1",
+   "fieldtype": "Select",
+   "options": "\nAND\nOR"
+  },
+  {
+   "fieldname": "logic_2",
+   "fieldtype": "Select",
+   "options": "\nAND\nOR"
+  },
+  {
+   "fieldname": "logic_3",
+   "fieldtype": "Select",
+   "options": "\nAND\nOR"
+  },
+  {
+   "fieldname": "logic_4",
+   "fieldtype": "Select",
+   "options": "\nAND\nOR"
+  },
+  {
+   "default": "Define Condition",
+   "fieldname": "define_condition",
+   "fieldtype": "Read Only",
+   "label": "define_condition"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-03-31 13:16:33.626955",
+ "modified_by": "Administrator",
+ "module": "OMS",
+ "name": "Fulfilment Center Assignment Rule",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Master Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
