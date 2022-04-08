@@ -32,6 +32,7 @@ frappe.ui.form.on('Fulfilment Center Assignment Rule', {
 });
 
 function hide_show_all_to_fields(frm) {
+	$('[data-fieldname=product_blank_value_2]').css("visibility", "hidden");
 	from_to_fields_setup(frm, 'order_created_date_condition', 'order_created_from_date', 'order_created_to_date', 'Order Date')
 	from_to_fields_setup(frm, 'selling_price_condtion', 'selling_price_from_value', 'selling_price_to_value', 'Selling Price')
 	from_to_fields_setup(frm, 'cost_condition', 'cost_from_value', 'cost_to_value', 'Cost')
