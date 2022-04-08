@@ -11,18 +11,69 @@
   "naming_series",
   "disable",
   "for_warehouse",
-  "logic_sb",
-  "define_condition",
-  "logic_1",
-  "logic_2",
-  "logic_3",
-  "logic_4",
-  "cb_1",
-  "fulfilment_center_customer",
-  "fulfilment_center_project",
+  "general_sb",
+  "order_created_date_logic",
+  "client_logic",
+  "program_logic",
+  "country_logic",
+  "brand_logic",
+  "condition_cb_1",
+  "order_created_date_condition",
+  "client_condition",
+  "program_condition",
+  "country_condition",
+  "brand_condition",
+  "value_cb_2",
+  "order_created_from_date",
+  "fulfilment_center_client",
+  "fulfilment_center_program",
   "fulfilment_center_country",
   "fulfilment_center_brand",
-  "fulfilment_center_item",
+  "value_cb_3",
+  "order_created_to_date",
+  "product_logic_sb",
+  "product_logic",
+  "selling_price_logic",
+  "cost_logic",
+  "length_logic",
+  "width_logic",
+  "height_logic",
+  "volume_logic",
+  "weight_logic",
+  "model_logic",
+  "supplier_logic",
+  "product_condition_cb",
+  "product_condition",
+  "selling_price_condtion",
+  "cost_condition",
+  "length_condition",
+  "width_condition",
+  "height_condition",
+  "volume_condition",
+  "weight_condition",
+  "model_condition",
+  "supplier_condition",
+  "product_value_cb_1",
+  "fulfilment_center_product",
+  "selling_price_from_value",
+  "cost_from_value",
+  "length_from_value",
+  "width_from_value",
+  "height_from_value",
+  "volume_from_value",
+  "weight_from_value",
+  "fulfilment_center_model",
+  "fulfilment_center_supplier",
+  "product_value_cb_2",
+  "product_blank_value_2",
+  "selling_price_to_value",
+  "cost_to_value",
+  "length_to_value",
+  "width_to_value",
+  "height_to_value",
+  "volume_to_value",
+  "weight_to_value",
+  "section_break_36",
   "priority",
   "rule_help"
  ],
@@ -31,6 +82,7 @@
    "default": "OMS.FR.#",
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Series",
    "options": "OMS.FR.#",
@@ -51,38 +103,16 @@
    "reqd": 1
   },
   {
-   "fieldname": "fulfilment_center_customer",
-   "fieldtype": "Table MultiSelect",
-   "label": "Fulfilment Center Customer",
-   "options": "Fulfilment Center Customer"
-  },
-  {
    "fieldname": "fulfilment_center_country",
    "fieldtype": "Table MultiSelect",
-   "label": "Fulfilment Center Country",
+   "label": "Country Value",
    "options": "Fulfilment Center Country"
-  },
-  {
-   "fieldname": "cb_1",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "fulfilment_center_project",
-   "fieldtype": "Table MultiSelect",
-   "label": "Fulfilment Center Project",
-   "options": "Fulfilment Center Project"
   },
   {
    "fieldname": "fulfilment_center_brand",
    "fieldtype": "Table MultiSelect",
-   "label": "Fulfilment Center Brand",
+   "label": "Brand Value",
    "options": "Fulfilment Center Brand"
-  },
-  {
-   "fieldname": "fulfilment_center_item",
-   "fieldtype": "Table MultiSelect",
-   "label": "Fulfilment Center Item",
-   "options": "Fulfilment Center Item"
   },
   {
    "default": "0",
@@ -96,39 +126,347 @@
    "label": "Fulfilment Center Rule Help"
   },
   {
-   "fieldname": "logic_sb",
+   "default": "NOT USED",
+   "fieldname": "order_created_date_logic",
+   "fieldtype": "Select",
+   "label": "<b>Order Created Date</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "order_created_date_condition",
+   "fieldtype": "Select",
+   "label": "Order Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "order_created_from_date",
+   "fieldtype": "Date",
+   "label": "Order Date Value"
+  },
+  {
+   "fieldname": "order_created_to_date",
+   "fieldtype": "Date"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "client_logic",
+   "fieldtype": "Select",
+   "label": "<b>Client</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "client_condition",
+   "fieldtype": "Select",
+   "label": "Client Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "fulfilment_center_client",
+   "fieldtype": "Table MultiSelect",
+   "label": "Client Value",
+   "options": "Fulfilment Center Customer"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "program_logic",
+   "fieldtype": "Select",
+   "label": "<b>Program</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "program_condition",
+   "fieldtype": "Select",
+   "label": "Program Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "fulfilment_center_program",
+   "fieldtype": "Table MultiSelect",
+   "label": "Program Value",
+   "options": "Fulfilment Center Project"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "country_logic",
+   "fieldtype": "Select",
+   "label": "<b>Destination Country</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "country_condition",
+   "fieldtype": "Select",
+   "label": "Country Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "brand_condition",
+   "fieldtype": "Select",
+   "label": "Brand Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "brand_logic",
+   "fieldtype": "Select",
+   "label": "<b>Brand</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "product_logic",
+   "fieldtype": "Select",
+   "label": "<b>Product Name</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "product_condition",
+   "fieldtype": "Select",
+   "label": "Product Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "fulfilment_center_product",
+   "fieldtype": "Table MultiSelect",
+   "label": "Product Value",
+   "options": "Fulfilment Center Item"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "selling_price_logic",
+   "fieldtype": "Select",
+   "label": "<b>Selling Price</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "selling_price_condtion",
+   "fieldtype": "Select",
+   "label": "Selling Price Condtion",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "cost_logic",
+   "fieldtype": "Select",
+   "label": "<b>Cost</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "cost_condition",
+   "fieldtype": "Select",
+   "label": "Cost Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "selling_price_from_value",
+   "fieldtype": "Float",
+   "label": "Selling Price Value"
+  },
+  {
+   "fieldname": "cost_from_value",
+   "fieldtype": "Float",
+   "label": "Cost Value"
+  },
+  {
+   "fieldname": "selling_price_to_value",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "cost_to_value",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "general_sb",
+   "fieldtype": "Section Break",
+   "label": "Define General Condition"
+  },
+  {
+   "fieldname": "product_logic_sb",
+   "fieldtype": "Section Break",
+   "label": "Define Product Condtion"
+  },
+  {
+   "fieldname": "section_break_36",
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "logic_1",
-   "fieldtype": "Select",
-   "options": "\nAND\nOR"
+   "fieldname": "condition_cb_1",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "logic_2",
-   "fieldtype": "Select",
-   "options": "\nAND\nOR"
+   "fieldname": "value_cb_2",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "logic_3",
-   "fieldtype": "Select",
-   "options": "\nAND\nOR"
+   "fieldname": "value_cb_3",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "logic_4",
-   "fieldtype": "Select",
-   "options": "\nAND\nOR"
+   "fieldname": "product_condition_cb",
+   "fieldtype": "Column Break"
   },
   {
-   "default": "Define Condition",
-   "fieldname": "define_condition",
-   "fieldtype": "Read Only",
-   "label": "define_condition"
+   "fieldname": "product_value_cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "product_value_cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "length_logic",
+   "fieldtype": "Select",
+   "label": "<b>Length</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "width_logic",
+   "fieldtype": "Select",
+   "label": "<b>Width</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "height_logic",
+   "fieldtype": "Select",
+   "label": "<b>Height</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "volume_logic",
+   "fieldtype": "Select",
+   "label": "<b>Volume</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "weight_logic",
+   "fieldtype": "Select",
+   "label": "<b>Weight</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "length_condition",
+   "fieldtype": "Select",
+   "label": "Length Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "width_condition",
+   "fieldtype": "Select",
+   "label": "Width Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "height_condition",
+   "fieldtype": "Select",
+   "label": "Height Condition"
+  },
+  {
+   "fieldname": "volume_condition",
+   "fieldtype": "Select",
+   "label": "Volume Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "weight_condition",
+   "fieldtype": "Select",
+   "label": "Weight Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "length_from_value",
+   "fieldtype": "Float",
+   "label": "Length Value"
+  },
+  {
+   "fieldname": "width_from_value",
+   "fieldtype": "Float",
+   "label": "Width Value"
+  },
+  {
+   "fieldname": "height_from_value",
+   "fieldtype": "Float",
+   "label": "Height Value"
+  },
+  {
+   "fieldname": "volume_from_value",
+   "fieldtype": "Data",
+   "label": "Volume Value"
+  },
+  {
+   "fieldname": "weight_from_value",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "length_to_value",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "width_to_value",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "height_to_value",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "volume_to_value",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "weight_to_value",
+   "fieldtype": "Float"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "model_logic",
+   "fieldtype": "Select",
+   "label": "<b>Model</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "supplier_logic",
+   "fieldtype": "Select",
+   "label": "<b>Supplier<b></b></b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "model_condition",
+   "fieldtype": "Select",
+   "label": "Model Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "supplier_condition",
+   "fieldtype": "Select",
+   "label": "Supplier Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "fulfilment_center_model",
+   "fieldtype": "Table MultiSelect",
+   "label": "Model Value",
+   "options": "Fulfilment Center Model"
+  },
+  {
+   "fieldname": "fulfilment_center_supplier",
+   "fieldtype": "Table MultiSelect",
+   "label": "Supplier Value",
+   "options": "Fulfilment Center Supplier"
+  },
+  {
+   "fieldname": "product_blank_value_2",
+   "fieldtype": "Read Only"
   }
  ],
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-31 13:16:33.626955",
+ "modified": "2022-04-08 14:41:15.023245",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "Fulfilment Center Assignment Rule",
