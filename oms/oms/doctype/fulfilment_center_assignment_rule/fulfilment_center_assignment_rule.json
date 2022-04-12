@@ -42,7 +42,6 @@
   "height_logic",
   "volume_logic",
   "weight_logic",
-  "model_logic",
   "supplier_logic",
   "product_condition_cb",
   "product_condition",
@@ -53,7 +52,6 @@
   "height_condition",
   "volume_condition",
   "weight_condition",
-  "model_condition",
   "supplier_condition",
   "product_value_cb_1",
   "fulfilment_center_product",
@@ -64,7 +62,6 @@
   "height_from_value",
   "volume_from_value",
   "weight_from_value",
-  "fulfilment_center_model",
   "fulfilment_center_supplier",
   "product_value_cb_2",
   "product_blank_value_2",
@@ -414,35 +411,16 @@
   },
   {
    "default": "NOT USED",
-   "fieldname": "model_logic",
-   "fieldtype": "Select",
-   "label": "<b>Model</b>",
-   "options": "\nNOT USED\nAND\nOR"
-  },
-  {
-   "default": "NOT USED",
    "fieldname": "supplier_logic",
    "fieldtype": "Select",
    "label": "<b>Supplier<b></b></b>",
    "options": "\nNOT USED\nAND\nOR"
   },
   {
-   "fieldname": "model_condition",
-   "fieldtype": "Select",
-   "label": "Model Condition",
-   "options": "\nIN\nNOT IN"
-  },
-  {
    "fieldname": "supplier_condition",
    "fieldtype": "Select",
    "label": "Supplier Condition",
    "options": "\nIN\nNOT IN"
-  },
-  {
-   "fieldname": "fulfilment_center_model",
-   "fieldtype": "Table MultiSelect",
-   "label": "Model Value",
-   "options": "Fulfilment Center Model"
   },
   {
    "fieldname": "fulfilment_center_supplier",
@@ -455,10 +433,8 @@
    "fieldtype": "Read Only"
   },
   {
-   "default": "OMS.FR.#",
    "fieldname": "rule_name",
    "fieldtype": "Data",
-   "hidden": 1,
    "in_list_view": 1,
    "label": "Rule Name",
    "reqd": 1,
@@ -477,7 +453,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-11 16:25:52.104767",
+ "modified": "2022-04-12 14:01:15.317072",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "Fulfilment Center Assignment Rule",
