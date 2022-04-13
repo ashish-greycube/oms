@@ -26,7 +26,7 @@
   "country_condition",
   "brand_condition",
   "value_cb_2",
-  "order_created_from_date",
+  "order_created_date_value_1",
   "fulfilment_center_client",
   "fulfilment_center_program",
   "fulfilment_center_country",
@@ -126,11 +126,6 @@
    "fieldtype": "Select",
    "label": "Order Condition",
    "options": "\n>\n<\nbetween"
-  },
-  {
-   "fieldname": "order_created_from_date",
-   "fieldtype": "Date",
-   "label": "Order Date Value"
   },
   {
    "fieldname": "order_created_to_date",
@@ -448,12 +443,17 @@
    "fieldname": "rule_description",
    "fieldtype": "Small Text",
    "label": "Rule Description"
+  },
+  {
+   "fieldname": "order_created_date_value_1",
+   "fieldtype": "Date",
+   "label": "Order Date Value"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-12 14:01:15.317072",
+ "modified": "2022-04-13 12:21:32.165065",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "Fulfilment Center Assignment Rule",
