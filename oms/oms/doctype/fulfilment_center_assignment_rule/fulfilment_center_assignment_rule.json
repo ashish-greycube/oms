@@ -27,12 +27,12 @@
   "brand_condition",
   "value_cb_2",
   "order_created_date_value_1",
-  "fulfilment_center_client",
-  "fulfilment_center_program",
-  "fulfilment_center_country",
-  "fulfilment_center_brand",
+  "client_value_1",
+  "program_value_1",
+  "country_value_1",
+  "brand_value_1",
   "value_cb_3",
-  "order_created_to_date",
+  "order_created_date_value_2",
   "product_logic_sb",
   "product_logic",
   "selling_price_logic",
@@ -55,23 +55,23 @@
   "supplier_condition",
   "product_value_cb_1",
   "fulfilment_center_product",
-  "selling_price_from_value",
-  "cost_from_value",
-  "length_from_value",
-  "width_from_value",
-  "height_from_value",
-  "volume_from_value",
-  "weight_from_value",
+  "selling_price_value_1",
+  "cost_value_1",
+  "length_value_1",
+  "width_value_1",
+  "height_value_1",
+  "volume_value_1",
+  "weight_value_1",
   "fulfilment_center_supplier",
   "product_value_cb_2",
   "product_blank_value_2",
-  "selling_price_to_value",
-  "cost_to_value",
-  "length_to_value",
-  "width_to_value",
-  "height_to_value",
-  "volume_to_value",
-  "weight_to_value",
+  "selling_price_value_2",
+  "cost_value_2",
+  "length_value_2",
+  "width_value_2",
+  "height_value_2",
+  "volume_value_2",
+  "weight_value_2",
   "section_break_36",
   "priority",
   "rule_help"
@@ -90,18 +90,6 @@
    "label": "For Warehouse",
    "options": "Warehouse",
    "reqd": 1
-  },
-  {
-   "fieldname": "fulfilment_center_country",
-   "fieldtype": "Table MultiSelect",
-   "label": "Country Value",
-   "options": "Fulfilment Center Country"
-  },
-  {
-   "fieldname": "fulfilment_center_brand",
-   "fieldtype": "Table MultiSelect",
-   "label": "Brand Value",
-   "options": "Fulfilment Center Brand"
   },
   {
    "default": "0",
@@ -128,10 +116,6 @@
    "options": "\n>\n<\nbetween"
   },
   {
-   "fieldname": "order_created_to_date",
-   "fieldtype": "Date"
-  },
-  {
    "default": "NOT USED",
    "fieldname": "client_logic",
    "fieldtype": "Select",
@@ -145,12 +129,6 @@
    "options": "\nIN\nNOT IN"
   },
   {
-   "fieldname": "fulfilment_center_client",
-   "fieldtype": "Table MultiSelect",
-   "label": "Client Value",
-   "options": "Fulfilment Center Customer"
-  },
-  {
    "default": "NOT USED",
    "fieldname": "program_logic",
    "fieldtype": "Select",
@@ -162,12 +140,6 @@
    "fieldtype": "Select",
    "label": "Program Condition",
    "options": "\nIN\nNOT IN"
-  },
-  {
-   "fieldname": "fulfilment_center_program",
-   "fieldtype": "Table MultiSelect",
-   "label": "Program Value",
-   "options": "Fulfilment Center Project"
   },
   {
    "default": "NOT USED",
@@ -239,24 +211,6 @@
    "fieldtype": "Select",
    "label": "Cost Condition",
    "options": "\n>\n<\nbetween"
-  },
-  {
-   "fieldname": "selling_price_from_value",
-   "fieldtype": "Float",
-   "label": "Selling Price Value"
-  },
-  {
-   "fieldname": "cost_from_value",
-   "fieldtype": "Float",
-   "label": "Cost Value"
-  },
-  {
-   "fieldname": "selling_price_to_value",
-   "fieldtype": "Float"
-  },
-  {
-   "fieldname": "cost_to_value",
-   "fieldtype": "Float"
   },
   {
    "fieldname": "general_sb",
@@ -361,50 +315,6 @@
    "options": "\n>\n<\nbetween"
   },
   {
-   "fieldname": "length_from_value",
-   "fieldtype": "Float",
-   "label": "Length Value"
-  },
-  {
-   "fieldname": "width_from_value",
-   "fieldtype": "Float",
-   "label": "Width Value"
-  },
-  {
-   "fieldname": "height_from_value",
-   "fieldtype": "Float",
-   "label": "Height Value"
-  },
-  {
-   "fieldname": "volume_from_value",
-   "fieldtype": "Data",
-   "label": "Volume Value"
-  },
-  {
-   "fieldname": "weight_from_value",
-   "fieldtype": "Data"
-  },
-  {
-   "fieldname": "length_to_value",
-   "fieldtype": "Float"
-  },
-  {
-   "fieldname": "width_to_value",
-   "fieldtype": "Float"
-  },
-  {
-   "fieldname": "height_to_value",
-   "fieldtype": "Float"
-  },
-  {
-   "fieldname": "volume_to_value",
-   "fieldtype": "Float"
-  },
-  {
-   "fieldname": "weight_to_value",
-   "fieldtype": "Float"
-  },
-  {
    "default": "NOT USED",
    "fieldname": "supplier_logic",
    "fieldtype": "Select",
@@ -448,12 +358,102 @@
    "fieldname": "order_created_date_value_1",
    "fieldtype": "Date",
    "label": "Order Date Value"
+  },
+  {
+   "fieldname": "client_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Client Value",
+   "options": "Fulfilment Center Customer"
+  },
+  {
+   "fieldname": "program_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Program Value",
+   "options": "Fulfilment Center Project"
+  },
+  {
+   "fieldname": "country_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Country Value",
+   "options": "Fulfilment Center Country"
+  },
+  {
+   "fieldname": "brand_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Brand Value",
+   "options": "Fulfilment Center Brand"
+  },
+  {
+   "fieldname": "order_created_date_value_2",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "selling_price_value_1",
+   "fieldtype": "Float",
+   "label": "Selling Price Value"
+  },
+  {
+   "fieldname": "cost_value_1",
+   "fieldtype": "Float",
+   "label": "Cost Value"
+  },
+  {
+   "fieldname": "length_value_1",
+   "fieldtype": "Float",
+   "label": "Length Value"
+  },
+  {
+   "fieldname": "width_value_1",
+   "fieldtype": "Float",
+   "label": "Width Value"
+  },
+  {
+   "fieldname": "height_value_1",
+   "fieldtype": "Float",
+   "label": "Height Value"
+  },
+  {
+   "fieldname": "volume_value_1",
+   "fieldtype": "Data",
+   "label": "Volume Value"
+  },
+  {
+   "fieldname": "weight_value_1",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "selling_price_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "cost_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "length_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "width_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "height_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "volume_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "weight_value_2",
+   "fieldtype": "Float"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-13 12:21:32.165065",
+ "modified": "2022-04-13 12:27:45.435797",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "Fulfilment Center Assignment Rule",
