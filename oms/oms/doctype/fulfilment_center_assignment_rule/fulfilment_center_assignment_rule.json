@@ -288,7 +288,8 @@
   {
    "fieldname": "height_condition",
    "fieldtype": "Select",
-   "label": "Height Condition"
+   "label": "Height Condition",
+   "options": "\n>\n<\nbetween"
   },
   {
    "fieldname": "volume_condition",
@@ -453,7 +454,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-14 11:19:35.966042",
+ "modified": "2022-04-14 12:36:33.745519",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "Fulfilment Center Assignment Rule",
