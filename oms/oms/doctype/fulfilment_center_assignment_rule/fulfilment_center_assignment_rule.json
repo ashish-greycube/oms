@@ -54,7 +54,7 @@
   "weight_condition",
   "supplier_condition",
   "product_value_cb_1",
-  "fulfilment_center_product",
+  "product_value_1",
   "selling_price_value_1",
   "cost_value_1",
   "length_value_1",
@@ -179,12 +179,6 @@
    "fieldtype": "Select",
    "label": "Product Condition",
    "options": "\nIN\nNOT IN"
-  },
-  {
-   "fieldname": "fulfilment_center_product",
-   "fieldtype": "Table MultiSelect",
-   "label": "Product Value",
-   "options": "Fulfilment Center Item"
   },
   {
    "default": "NOT USED",
@@ -448,12 +442,18 @@
   {
    "fieldname": "weight_value_2",
    "fieldtype": "Float"
+  },
+  {
+   "fieldname": "product_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Product Value",
+   "options": "Fulfilment Center Item"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-13 12:27:45.435797",
+ "modified": "2022-04-14 11:16:50.144295",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "Fulfilment Center Assignment Rule",
