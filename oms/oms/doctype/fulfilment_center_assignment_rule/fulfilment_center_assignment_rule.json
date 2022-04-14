@@ -45,7 +45,7 @@
   "supplier_logic",
   "product_condition_cb",
   "product_condition",
-  "selling_price_condtion",
+  "selling_price_condition",
   "cost_condition",
   "length_condition",
   "width_condition",
@@ -186,12 +186,6 @@
    "fieldtype": "Select",
    "label": "<b>Selling Price</b>",
    "options": "\nNOT USED\nAND\nOR"
-  },
-  {
-   "fieldname": "selling_price_condtion",
-   "fieldtype": "Select",
-   "label": "Selling Price Condtion",
-   "options": "\n>\n<\nbetween"
   },
   {
    "default": "NOT USED",
@@ -448,12 +442,18 @@
    "fieldtype": "Table MultiSelect",
    "label": "Product Value",
    "options": "Fulfilment Center Item"
+  },
+  {
+   "fieldname": "selling_price_condition",
+   "fieldtype": "Select",
+   "label": "Selling Price Condtion",
+   "options": "\n>\n<\nbetween"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-14 11:16:50.144295",
+ "modified": "2022-04-14 11:19:35.966042",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "Fulfilment Center Assignment Rule",
