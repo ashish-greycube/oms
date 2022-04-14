@@ -62,7 +62,7 @@
   "height_value_1",
   "volume_value_1",
   "weight_value_1",
-  "fulfilment_center_supplier",
+  "supplier_value_1",
   "product_value_cb_2",
   "product_blank_value_2",
   "selling_price_value_2",
@@ -317,12 +317,6 @@
    "options": "\nIN\nNOT IN"
   },
   {
-   "fieldname": "fulfilment_center_supplier",
-   "fieldtype": "Table MultiSelect",
-   "label": "Supplier Value",
-   "options": "Fulfilment Center Supplier"
-  },
-  {
    "fieldname": "product_blank_value_2",
    "fieldtype": "Read Only"
   },
@@ -449,12 +443,18 @@
    "fieldtype": "Select",
    "label": "Selling Price Condtion",
    "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "supplier_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Supplier Value",
+   "options": "Fulfilment Center Supplier"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-14 12:36:33.745519",
+ "modified": "2022-04-14 12:43:11.812358",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "Fulfilment Center Assignment Rule",
