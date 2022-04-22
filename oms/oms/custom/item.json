@@ -573,7 +573,7 @@
    "in_preview": 0,
    "in_standard_filter": 0,
    "insert_after": "item_group",
-   "label": "model_no_cf",
+   "label": "Manufacturer Model No",
    "length": 0,
    "mandatory_depends_on": null,
    "modified": "2022-04-12 09:11:10.596448",
