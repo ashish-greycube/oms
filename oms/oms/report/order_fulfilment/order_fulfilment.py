@@ -28,7 +28,7 @@ def get_columns():
 		{"fieldname": "so_qty", "label": _("Sales Order Qty"), "fieldtype": "Float", "width": 150},
 		{"fieldname": "actual_qty", "label": _("Actual Qty"), "fieldtype": "Float", "width": 100},
 		{"fieldname": "applied_fulfilment_rule","label": _("Applied Fulfilment Rule"),"fieldtype": "Link","options": "Fulfilment Center Assignment Rule","width": 220},
-		{"fieldname": "fulfilment_rule_result", "label": _("Fulfilment Rule Result"), "fieldtype": "Data", "width": 500},
+		{"fieldname": "fulfilment_rule_result", "label": _("Fulfilment Rule Result"), "fieldtype": "Small Text", "width": 500},
 	]
 	return columns		
 
@@ -45,7 +45,46 @@ def get_conditions(filters):
 
 def get_data(filters):
 	return sales_order_query_with_fulfilment_reuslt(filters)
-	
+
+def sales_order_query_with_fulfilment_reuslt(filters):
+	report_conditions = get_conditions(filters)
+	warehouse=filters.get('warehouse')
+	if warehouse:
+		report_conditions += " AND SO_item.warehouse = '%s' " % (warehouse)
+	print('-'*100)
+	print('report_conditions',report_conditions)
+	query_output=frappe.db.sql(
+		"""
+-- Order Created Date, Client, Program, Country(Destination), Brand, Product Name
+-- only submit
+SELECT 
+SO.name as so_name,
+SO.transaction_date as order_created_date,
+SO.customer as client,
+SO_item.item_name as product_name,
+SO_item.warehouse as so_item_warehouse,
+SO_item.stock_uom as stock_uom,
+SO_item.qty as so_qty,
+SO_item.actual_qty as actual_qty ,
+SO_item.fulfilment_center_assignment_rule_cf as applied_fulfilment_rule,
+SO_item.fulfilment_rule_result_cf as fulfilment_rule_result,
+SO_item.idx
+FROM `tabSales Order` SO 
+left outer join `tabAddress` address
+on address.name =SO.shipping_address_name 
+inner join `tabSales Order Item` SO_item 
+on SO.name =SO_item.parent 
+inner join  `tabItem` item 
+on SO_item.item_code =item.item_code 
+inner join `tabItem Default` item_default 
+on item.item_code =item_default.parent  
+where SO.docstatus=0 {report_conditions} 
+order by SO.name desc, SO_item.idx asc
+""".format(report_conditions=report_conditions,as_dict=1,debug=1))
+	print(query_output,'query_output')
+	return query_output		
+
+#  for SO logic	
 def sales_order_query(report_conditions,rules_filter_values,rules_conditions):
 	print("report_conditions,rules_filter_values,rules_conditions")
 	print(report_conditions,rules_filter_values,rules_conditions)
@@ -89,6 +128,7 @@ inner join `tabItem Default` item_default
 on item.item_code =item_default.parent  
 where SO.docstatus=0 {report_conditions} {rules_conditions} """.format(report_conditions=report_conditions,rules_conditions=rules_conditions),rules_filter_values,as_dict=1,debug=0)
 	return query_output	
+
 
 def find_warehouse_based_on_creiteria(filters,so_item_name):
 	unique_so_name_data=[]
@@ -188,41 +228,4 @@ def find_warehouse_based_on_creiteria(filters,so_item_name):
 
 	return result_data	
 
-	
-def sales_order_query_with_fulfilment_reuslt(filters):
-	report_conditions = get_conditions(filters)
-	warehouse=filters.get('warehouse')
-	if warehouse:
-		report_conditions += " AND SO_item.warehouse = '%s' " % (warehouse)
-	print('-'*100)
-	print('report_conditions',report_conditions)
-	query_output=frappe.db.sql(
-		"""
--- Order Created Date, Client, Program, Country(Destination), Brand, Product Name
--- only submit
-SELECT 
-SO.name as so_name,
-SO.transaction_date as order_created_date,
-SO.customer as client,
-SO_item.item_name as product_name,
-SO_item.warehouse as so_item_warehouse,
-SO_item.stock_uom as stock_uom,
-SO_item.qty as so_qty,
-SO_item.actual_qty as actual_qty ,
-SO_item.fulfilment_center_assignment_rule_cf as applied_fulfilment_rule,
-SO_item.fulfilment_rule_result_cf as fulfilment_rule_result,
-SO_item.idx
-FROM `tabSales Order` SO 
-left outer join `tabAddress` address
-on address.name =SO.shipping_address_name 
-inner join `tabSales Order Item` SO_item 
-on SO.name =SO_item.parent 
-inner join  `tabItem` item 
-on SO_item.item_code =item.item_code 
-inner join `tabItem Default` item_default 
-on item.item_code =item_default.parent  
-where SO.docstatus=0 {report_conditions} 
-order by SO.name desc, SO_item.idx asc
-""".format(report_conditions=report_conditions,as_dict=1,debug=1))
-	print(query_output,'query_output')
-	return query_output		
+		
