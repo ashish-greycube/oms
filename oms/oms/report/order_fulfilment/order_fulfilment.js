@@ -11,7 +11,7 @@ frappe.query_reports["Order Fulfilment"] = {
 			'default': [frappe.datetime.nowdate(), frappe.datetime.nowdate()]
 		},
 		{
-			'label': __('Fulfilment Warehouse'),
+			'label': __('Warehouse'),
 			'fieldtype': 'Link',
 			'fieldname': 'warehouse',
 			'options': 'Warehouse',

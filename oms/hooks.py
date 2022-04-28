@@ -95,13 +95,11 @@ override_doctype_class = {
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	"Sales Order": {
+		"on_change": "oms.oms_sales_order_controller.set_warehouse_as_per_fullfilment_rule",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
