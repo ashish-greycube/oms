@@ -21,6 +21,7 @@
    "label": "Fulfilment Center",
    "link_type": "DocType",
    "onboard": 0,
+   "only_for": "",
    "type": "Card Break"
   },
   {
@@ -30,6 +31,27 @@
    "link_to": "Fulfilment Center Assignment Rule",
    "link_type": "DocType",
    "onboard": 0,
+   "only_for": "",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Problematic Orders",
+   "link_to": "Problematic Orders",
+   "link_type": "Report",
+   "onboard": 0,
+   "only_for": "",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sales Order to Submit",
+   "link_to": "Sales Order to Submit",
+   "link_type": "Report",
+   "onboard": 0,
+   "only_for": "",
    "type": "Link"
   },
   {
@@ -47,6 +69,7 @@
    "label": "Transaction",
    "link_type": "DocType",
    "onboard": 0,
+   "only_for": "",
    "type": "Card Break"
   },
   {
@@ -85,7 +108,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-04-12 15:57:34.175686",
+ "modified": "2022-04-29 11:11:51.526958",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "OMS",
