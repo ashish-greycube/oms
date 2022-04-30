@@ -1,0 +1,39 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2022-04-29 15:45:42.344881",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "json": "{\"filters\":[[\"Sales Order\",\"status\",\"=\",\"Draft\",false],[\"Sales Order Item\",\"warehouse\",\"is\",\"set\",false],[\"Sales Order\",\"company\",\"=\",\"Munero Global Loyalty FZCO\"]],\"fields\":[[\"name\",\"Sales Order\"],[\"customer\",\"Sales Order\"],[\"transaction_date\",\"Sales Order\"],[\"item_code\",\"Sales Order Item\"],[\"item_name\",\"Sales Order Item\"],[\"warehouse\",\"Sales Order Item\"],[\"fulfilment_rule_result_cf\",\"Sales Order Item\"],[\"qty\",\"Sales Order Item\"],[\"fulfilment_center_assignment_rule_cf\",\"Sales Order Item\"]],\"order_by\":\"`tabSales Order`.`modified` desc\",\"page_length\":20,\"column_widths\":{\"name\":165,\"customer\":120,\"transaction_date\":102,\"Sales Order Item:item_code\":112,\"Sales Order Item:item_name\":150,\"Sales Order Item:warehouse\":165,\"Sales Order Item:fulfilment_rule_result_cf\":120,\"Sales Order Item:qty\":84,\"Sales Order Item:fulfilment_center_assignment_rule_cf\":120},\"group_by\":null}",
+ "modified": "2022-04-29 15:52:52.179424",
+ "modified_by": "Administrator",
+ "module": "OMS",
+ "name": "Sales Order to Submit",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Sales Order",
+ "report_name": "Sales Order to Submit",
+ "report_type": "Report Builder",
+ "roles": [
+  {
+   "role": "Sales User"
+  },
+  {
+   "role": "Sales Manager"
+  },
+  {
+   "role": "Maintenance User"
+  },
+  {
+   "role": "Accounts User"
+  },
+  {
+   "role": "Stock User"
+  }
+ ]
+}
