@@ -68,6 +68,7 @@ def set_warehouse_as_per_fullfilment_rule(self,method):
                 #case 2: Multiple FR Applied
                 elif len(output)>1:
                     fulfilment_rule_result_cf=' ,'.join(i.applied_fulfilment_rule+":"+i.warehouse for i in output)
+                    fulfilment_rule_result_cf= 'Multiple FR -' + fulfilment_rule_result_cf
                     frappe.db.set_value('Sales Order Item', d.name, 'fulfilment_rule_result_cf',  fulfilment_rule_result_cf)
                     frappe.msgprint(_("Row # {0} : Item {1} , Multiple matching fulfilment rule found. <br> Hence fulfilment result is {2}").format(d.idx,d.item_name,frappe.bold(fulfilment_rule_result_cf)),alert=1,indicator="red") 
                     modified=True                    

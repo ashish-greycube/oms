@@ -44,6 +44,36 @@
    "type": "Link"
   },
   {
+   "dependencies": "Sales Order",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Problematic Report",
+   "link_to": "Problematic Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "dependencies": "Sales Order",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sales Order to Submit",
+   "link_to": "Sales Order to Submit",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "dependencies": "Sales Order",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Problematic Orders",
+   "link_to": "Problematic Orders",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
    "hidden": 0,
    "is_query_report": 0,
    "label": "Transaction",
@@ -89,7 +119,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-04-29 15:45:16.737037",
+ "modified": "2022-05-02 13:04:11.295265",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "OMS",
