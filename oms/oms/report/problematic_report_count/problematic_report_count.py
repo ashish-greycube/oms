@@ -34,3 +34,22 @@ inner join `tabSales Order Item` as so_item
 on so.name =so_item.parent 
 where {report_conditions} """.format(report_conditions=report_conditions,as_dict=1,debug=1))	
 	return query_output	
+
+@frappe.whitelist()
+def get_so_count(warehouse):
+	print('warehouse'*10,warehouse,warehouse == 1)
+	if warehouse == '1':
+		report_conditions = " so_item.warehouse = '' or so_item.warehouse is NULL "
+	else:
+		report_conditions = " so_item.warehouse is NOT NULL and so_item.warehouse!=''"
+
+	query_output=frappe.db.sql(
+		"""
+-- Order Created Date, Client, Program, Country(Destination), Brand, Product Name
+-- only submit
+SELECT count(so_item.name) from `tabSales Order` as so 
+inner join `tabSales Order Item` as so_item 
+on so.name =so_item.parent 
+where {report_conditions} """.format(report_conditions=report_conditions,as_dict=1,debug=1))
+	print(query_output)	
+	return query_output		
