@@ -4,7 +4,7 @@ $('body').on('click', 'a', function(e) {
     if (oms_route.length==2 && oms_route[0]=='Workspaces' && oms_route[1]=='OMS'){
         setTimeout(() => {
             get_so_count()
-        }, 600);
+        }, 1200);
     }
 });
 //  for first time load
@@ -12,7 +12,7 @@ $( document ).ready(function() {
     // Handler for .ready() called.
     setTimeout(() => {
         get_so_count()
-    }, 1500);
+    }, 3000);
   });
 
 
