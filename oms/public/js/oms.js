@@ -33,10 +33,10 @@ $(document).ready(function () {
                                 '<div style="color:red"><b>' + r.message[0].count + "</b> orders</div>")
                             $('div.widget-title:contains("To Submit")').closest('.shortcut-widget-box').off('click').find('.indicator-pill').html(
                                 '<div style="color:brown"><b>' + r.message[1].count + "</b> orders</div>")
-                        }, 100);
+                        }, 200);
                     }
                 });
             }
         }
-    }, 1700);
+    }, 2000);
 })
