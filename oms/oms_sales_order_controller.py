@@ -77,3 +77,34 @@ def set_warehouse_as_per_fullfilment_rule(self,method):
         self.reload()
     print(d.name,'output',output)
         
+@frappe.whitelist()
+def get_all_so_count():	
+	company = frappe.db.get_single_value("Global Defaults", "default_company")
+
+	print('--'*10)
+	query_output=frappe.db.sql(
+		"""
+-- Order Created Date, Client, Program, Country(Destination), Brand, Product Name
+-- only submit
+SELECT count(so_item.name) as count from `tabSales Order` as so 
+inner join `tabSales Order Item` as so_item 
+on so.name =so_item.parent 
+where  so.status='Draft' and (so_item.warehouse = '' or so_item.warehouse is NULL)
+and so.company=%s
+""",company,as_dict=1,debug=1)	
+
+	next_query_output=frappe.db.sql(
+		"""
+-- Order Created Date, Client, Program, Country(Destination), Brand, Product Name
+-- only submit
+SELECT count(so_item.name) as count from `tabSales Order` as so 
+inner join `tabSales Order Item` as so_item 
+on so.name =so_item.parent 
+where  so.status='Draft' and (so_item.warehouse is NOT NULL and so_item.warehouse!='')
+and so.company=%s
+""",company,as_dict=1,debug=1)
+	print('query_output',query_output)
+	print('next_query_output',next_query_output)
+	query_output.append(next_query_output[0])
+	print(query_output)
+	return query_output

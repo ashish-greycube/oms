@@ -1,33 +1,42 @@
-//  for navigating between modules
-$('body').on('click', 'a', function(e) {
-    let oms_route=frappe.get_route()
-    if (oms_route.length==2 && oms_route[0]=='Workspaces' && oms_route[1]=='OMS'){
-        setTimeout(() => {
-            get_so_count()
-        }, 1200);
+$(document).on('startup', function () {
+    // Monkey patch workspace.show to reset link url
+    if (frappe.workspace) {
+        let original_show = frappe.workspace.show;
+        frappe.workspace.show = function () {
+            original_show.apply(this, arguments);
+            if (frappe.desk_page.page_name == "OMS") {
+                frappe.call({
+                    method: "oms.oms_sales_order_controller.get_all_so_count",
+                    callback: function (r, rt) {
+                        setTimeout(() => {
+                            $('div.widget-title:contains("Problematic Orders")').closest('.shortcut-widget-box').off('click').find('.indicator-pill').html(
+                                '<div style="color:red"><b>' + r.message[0].count + "</b> orders</div>")
+                            $('div.widget-title:contains("To Submit")').closest('.shortcut-widget-box').off('click').find('.indicator-pill').html(
+                                '<div style="color:brown"><b>' + r.message[1].count + "</b> orders</div>")
+                        }, 300);
+                    }
+                });
+            }
+        }
     }
 });
-//  for first time load
-$( document ).ready(function() {
-    // Handler for .ready() called.
+
+$(document).ready(function () {
     setTimeout(() => {
-        get_so_count()
-    }, 3000);
-  });
-
-
-function get_so_count() {
-   
-    frappe.call('oms.oms.report.problematic_report_count.problematic_report_count.get_so_count', {
-        warehouse: 1
-    }).then(r => {
-        console.log(r.message)
-        $('div .indicator-pill.ellipsis.gray').text(function () {return $(this).text().replace("0 to submit", r.message[0]+ " to submit"); }); 
-    })           
-    frappe.call('oms.oms.report.problematic_report_count.problematic_report_count.get_so_count', {
-        warehouse: 0
-    }).then(r => {
-        console.log(r.message)
-        $('div .indicator-pill.ellipsis.gray').text(function () {return $(this).text().replace("0 problematic orders", r.message[0]+ " problematic orders"); }); 
-    })   
-}
+        if (frappe.workspace) {
+            if (frappe.desk_page.page_name == "OMS") {
+                frappe.call({
+                    method: "oms.oms_sales_order_controller.get_all_so_count",
+                    callback: function (r, rt) {
+                        setTimeout(() => {
+                            $('div.widget-title:contains("Problematic Orders")').closest('.shortcut-widget-box').off('click').find('.indicator-pill').html(
+                                '<div style="color:red"><b>' + r.message[0].count + "</b> orders</div>")
+                            $('div.widget-title:contains("To Submit")').closest('.shortcut-widget-box').off('click').find('.indicator-pill').html(
+                                '<div style="color:brown"><b>' + r.message[1].count + "</b> orders</div>")
+                        }, 100);
+                    }
+                });
+            }
+        }
+    }, 1700);
+})

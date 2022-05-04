@@ -119,7 +119,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-05-03 09:06:24.579961",
+ "modified": "2022-05-04 09:52:36.991058",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "OMS",
@@ -129,19 +129,19 @@
  "shortcuts": [
   {
    "color": "#CB2929",
-   "doc_view": "Report Builder",
-   "format": "{} to submit",
+   "doc_view": "New",
+   "format": "orders",
    "label": "To Submit",
-   "link_to": "Sales Order",
+   "link_to": "Task",
    "stats_filter": "{\"status\":\"1draft\"}",
    "type": "DocType"
   },
   {
    "color": "#449CF0",
-   "doc_view": "Report Builder",
-   "format": "{} problematic orders",
+   "doc_view": "New",
+   "format": "orders",
    "label": "Problematic Orders",
-   "link_to": "Sales Order",
+   "link_to": "Task",
    "stats_filter": "{\"status\":\"1draft\"}",
    "type": "DocType"
   }
