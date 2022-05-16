@@ -19,13 +19,31 @@ def execute(filters=None):
 
 def get_columns():
 	columns = [
-		{"fieldname": "so_name", "label": _("SO #"), "fieldtype": "Link","options": "Sales Order", "width": 170},
-		{"fieldname": "order_created_date", "label": _("Order Created Date"), "fieldtype": "Date", "width": 150},
+		{"fieldname": "so_name", "label": _("Order #"), "fieldtype": "Link","options": "Sales Order", "width": 170},
+		{"fieldname": "po_no", "label": _("Order Ref #"), "fieldtype": "Link","options": "Sales Order", "width": 150},
+		{"fieldname": "transaction_date", "label": _("Order Date"), "fieldtype": "Date", "width": 150},
+		{"fieldname": "creation", "label": _("Order Created Date"), "fieldtype": "Date", "width": 170},
 		{"fieldname": "client", "label": _("Client"), "fieldtype": "Link","options": "Customer", "width": 120},
+		{"fieldname": "program", "label": _("Program"), "fieldtype": "Link","options": "Project", "width": 120},
+		{"fieldname": "status", "label": _("Order Status"), "fieldtype": "Data", "width": 150},
+		{"fieldname": "marked_shipped", "label": _("Marked Shipped?"), "fieldtype": "Check", "width": 150},
+		{"fieldname": "notes_cf", "label": _("Notes"), "fieldtype": "Small Text", "width": 150},
+		{"fieldname": "contact_phone", "label": _("Phone #"), "fieldtype": "Data", "width": 150},
+		{"fieldname": "contact_email", "label": _("Email"), "fieldtype": "Data", "width": 150},
+		{"fieldname": "city", "label": _("City"), "fieldtype": "Data", "width": 150},
+		{"fieldname": "state", "label": _("State"), "fieldtype": "Data", "width": 150},
+		{"fieldname": "pincode", "label": _("Zip Code"), "fieldtype": "Data", "width": 150},
+		{"fieldname": "address_line1", "label": _("Address Line 1"), "fieldtype": "Data", "width": 150},
+		{"fieldname": "address_line2", "label": _("Address Line 2"), "fieldtype": "Data", "width": 150},
+		{"fieldname": "idx", "label": _("Line Item Sequence #"), "fieldtype": "Int", "width": 170},
+		{"fieldname": "cpo_line_no_cf", "label": _("Line Item #"), "fieldtype": "Data", "width": 150},
 		{"fieldname": "product_name","label": _("Product Name"),"fieldtype": "Link","options": "Item","width": 120,},	
+		{"fieldname": "product_brand","label": _("Product Brand"),"fieldtype": "Link","options": "Brand","width": 120,},
+		{"fieldname": "model_no_cf", "label": _("Product Model #"), "fieldtype": "Data", "width": 150},
+		{"fieldname": "so_qty", "label": _("Quantity"), "fieldtype": "Float", "width": 150},
+		{"fieldname": "serial_no", "label": _("Serial No"), "fieldtype": "Small Text", "width": 150},
 		{"fieldname": "so_item_warehouse","label": _("SO Item Warehouse"),"fieldtype": "Link","options": "Warehouse","width": 220,},
 		{"fieldname": "stock_uom","label": _("Stock UOM"),"fieldtype": "Link","options": "UOM","width": 100,},		
-		{"fieldname": "so_qty", "label": _("Sales Order Qty"), "fieldtype": "Float", "width": 150},
 		{"fieldname": "actual_qty", "label": _("Actual Qty"), "fieldtype": "Float", "width": 100},
 		{"fieldname": "applied_fulfilment_rule","label": _("Applied Fulfilment Rule"),"fieldtype": "Link","options": "Fulfilment Center Assignment Rule","width": 220},
 		{"fieldname": "fulfilment_rule_result", "label": _("Fulfilment Rule Result"), "fieldtype": "Small Text", "width": 500},
@@ -51,7 +69,7 @@ def sales_order_query_with_fulfilment_reuslt(filters):
 	warehouse=filters.get('warehouse')
 	if warehouse:
 		report_conditions += " AND SO_item.warehouse = '%s' " % (warehouse)
-	print('-'*100)
+	print('11-'*100)
 	print('report_conditions',report_conditions)
 	query_output=frappe.db.sql(
 		"""
@@ -59,12 +77,30 @@ def sales_order_query_with_fulfilment_reuslt(filters):
 -- only submit
 SELECT 
 SO.name as so_name,
-SO.transaction_date as order_created_date,
+SO.po_no as po_no,
+SO.transaction_date as transaction_date,
+SO.creation as creation,
 SO.customer as client,
+SO.project as program,
+SO.status as status,
+IF(SO.per_delivered=100,1,0) as marked_shipped,
+SO.notes_cf as notes_cf,
+SO.contact_phone as contact_phone,
+SO.contact_email as contact_email,
+address.city as city,
+address.state as state,
+address.pincode as pincode,
+address.address_line1 as address_line1,
+address.address_line2 as address_line2,
+SO_item.idx as idx,
+SO_item.cpo_line_no_cf as cpo_line_no_cf,
+SO_item.brand as product_brand,
+SO_item.model_no_cf as model_no_cf,
+SO_item.qty as so_qty,
+delivery_note_item.serial_no,
 SO_item.item_name as product_name,
 SO_item.warehouse as so_item_warehouse,
 SO_item.stock_uom as stock_uom,
-SO_item.qty as so_qty,
 SO_item.actual_qty as actual_qty ,
 SO_item.fulfilment_center_assignment_rule_cf as applied_fulfilment_rule,
 SO_item.fulfilment_rule_result_cf as fulfilment_rule_result,
@@ -78,9 +114,11 @@ inner join  `tabItem` item
 on SO_item.item_code =item.item_code 
 inner join `tabItem Default` item_default 
 on item.item_code =item_default.parent  
-where SO.docstatus=0 {report_conditions} 
+left outer join `tabDelivery Note Item` delivery_note_item
+on delivery_note_item.so_detail =SO_item.name
+where SO.docstatus in (0,1) {report_conditions} 
 order by SO.name desc, SO_item.idx asc
-""".format(report_conditions=report_conditions,as_dict=1,debug=1))
+""".format(report_conditions=report_conditions),as_dict=1,debug=1)
 	print(query_output,'query_output')
 	return query_output		
 
