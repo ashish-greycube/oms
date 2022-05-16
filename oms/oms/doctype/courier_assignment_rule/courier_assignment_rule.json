@@ -1,0 +1,528 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:rule_name",
+ "creation": "2022-05-13 13:28:07.808258",
+ "description": "Define Explicit Conditions",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "rule_name",
+  "disable",
+  "supplier",
+  "cb_1",
+  "rule_description",
+  "general_sb",
+  "order_created_date_logic",
+  "country_logic",
+  "order_warehouse_logic",
+  "client_logic",
+  "program_logic",
+  "brand_logic",
+  "condition_cb_1",
+  "order_created_date_condition",
+  "country_condition",
+  "order_warehouse_condition",
+  "client_condition",
+  "program_condition",
+  "brand_condition",
+  "value_cb_2",
+  "order_created_date_value_1",
+  "country_value_1",
+  "warehouse_value_1",
+  "client_value_1",
+  "program_value_1",
+  "brand_value_1",
+  "value_cb_3",
+  "order_created_date_value_2",
+  "product_logic_sb",
+  "product_logic",
+  "product_margin_logic",
+  "shipping_margin_logic",
+  "length_logic",
+  "width_logic",
+  "height_logic",
+  "volume_logic",
+  "weight_logic",
+  "product_condition_cb",
+  "product_condition",
+  "product_margin_condition",
+  "shipping_margin_condition",
+  "length_condition",
+  "width_condition",
+  "height_condition",
+  "volume_condition",
+  "weight_condition",
+  "product_value_cb_1",
+  "product_value_1",
+  "selling_price_value_1",
+  "shipping_margin_value_1",
+  "length_value_1",
+  "width_value_1",
+  "height_value_1",
+  "volume_value_1",
+  "weight_value_1",
+  "product_value_cb_2",
+  "product_blank_value_2",
+  "product_margin_value_2",
+  "shipping_margin_value_2",
+  "length_value_2",
+  "width_value_2",
+  "height_value_2",
+  "volume_value_2",
+  "weight_value_2",
+  "section_break_36",
+  "priority",
+  "rule_help"
+ ],
+ "fields": [
+  {
+   "fieldname": "rule_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Rule Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "disable",
+   "fieldtype": "Check",
+   "label": "Disable"
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "For Courier",
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rule_description",
+   "fieldtype": "Small Text",
+   "label": "Rule Description"
+  },
+  {
+   "fieldname": "general_sb",
+   "fieldtype": "Section Break",
+   "label": "Define General Condition"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "country_logic",
+   "fieldtype": "Select",
+   "label": "<b>Order Destination</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "bold": 1,
+   "default": "NOT USED",
+   "fieldname": "order_created_date_logic",
+   "fieldtype": "Select",
+   "label": "Order Created Date",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "client_logic",
+   "fieldtype": "Select",
+   "label": "<b>Client</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "program_logic",
+   "fieldtype": "Select",
+   "label": "<b>Program</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "brand_logic",
+   "fieldtype": "Select",
+   "label": "<b>Brand</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "condition_cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "country_condition",
+   "fieldtype": "Select",
+   "label": "Order Destination Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "order_warehouse_condition",
+   "fieldtype": "Select",
+   "label": "Order Warehouse Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "order_created_date_condition",
+   "fieldtype": "Select",
+   "label": "Order Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "client_condition",
+   "fieldtype": "Select",
+   "label": "Client Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "program_condition",
+   "fieldtype": "Select",
+   "label": "Program Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "brand_condition",
+   "fieldtype": "Select",
+   "label": "Brand Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "value_cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "order_created_date_value_1",
+   "fieldtype": "Date",
+   "label": "Order Date Value"
+  },
+  {
+   "fieldname": "client_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Client Value",
+   "options": "Fulfilment Center Customer"
+  },
+  {
+   "fieldname": "program_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Program Value",
+   "options": "Fulfilment Center Project"
+  },
+  {
+   "fieldname": "country_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Country Value",
+   "options": "Fulfilment Center Country"
+  },
+  {
+   "fieldname": "brand_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Brand Value",
+   "options": "Fulfilment Center Brand"
+  },
+  {
+   "fieldname": "value_cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "order_created_date_value_2",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "product_logic_sb",
+   "fieldtype": "Section Break",
+   "label": "Define Product Condtion"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "product_logic",
+   "fieldtype": "Select",
+   "label": "<b>Product Name</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "product_margin_logic",
+   "fieldtype": "Select",
+   "label": "<b>Product Margin</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "shipping_margin_logic",
+   "fieldtype": "Select",
+   "label": "<b>Shipping Margin</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "length_logic",
+   "fieldtype": "Select",
+   "label": "<b>Length</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "width_logic",
+   "fieldtype": "Select",
+   "label": "<b>Width</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "height_logic",
+   "fieldtype": "Select",
+   "label": "<b>Height</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "volume_logic",
+   "fieldtype": "Select",
+   "label": "<b>Volume</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "weight_logic",
+   "fieldtype": "Select",
+   "label": "<b>Weight</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "product_condition_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "product_condition",
+   "fieldtype": "Select",
+   "label": "Product Condition",
+   "options": "\nIN\nNOT IN"
+  },
+  {
+   "fieldname": "product_margin_condition",
+   "fieldtype": "Select",
+   "label": "<b>Product Margin Condition</b>",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "shipping_margin_condition",
+   "fieldtype": "Select",
+   "label": "Shipping Margin Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "length_condition",
+   "fieldtype": "Select",
+   "label": "Length Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "width_condition",
+   "fieldtype": "Select",
+   "label": "Width Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "height_condition",
+   "fieldtype": "Select",
+   "label": "Height Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "volume_condition",
+   "fieldtype": "Select",
+   "label": "Volume Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "weight_condition",
+   "fieldtype": "Select",
+   "label": "Weight Condition",
+   "options": "\n>\n<\nbetween"
+  },
+  {
+   "fieldname": "product_value_cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "product_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Product Value",
+   "options": "Fulfilment Center Item"
+  },
+  {
+   "fieldname": "selling_price_value_1",
+   "fieldtype": "Float",
+   "label": "Product Margin  Value"
+  },
+  {
+   "fieldname": "shipping_margin_value_1",
+   "fieldtype": "Float",
+   "label": "Shipping Margin Value"
+  },
+  {
+   "fieldname": "length_value_1",
+   "fieldtype": "Float",
+   "label": "Length Value"
+  },
+  {
+   "fieldname": "width_value_1",
+   "fieldtype": "Float",
+   "label": "Width Value"
+  },
+  {
+   "fieldname": "height_value_1",
+   "fieldtype": "Float",
+   "label": "Height Value"
+  },
+  {
+   "fieldname": "volume_value_1",
+   "fieldtype": "Data",
+   "label": "Volume Value"
+  },
+  {
+   "fieldname": "weight_value_1",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "product_value_cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "product_blank_value_2",
+   "fieldtype": "Read Only"
+  },
+  {
+   "fieldname": "product_margin_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "shipping_margin_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "length_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "width_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "height_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "volume_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "weight_value_2",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "section_break_36",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "priority",
+   "fieldtype": "Int",
+   "label": "Priority"
+  },
+  {
+   "fieldname": "rule_help",
+   "fieldtype": "HTML",
+   "label": "Fulfilment Center Rule Help"
+  },
+  {
+   "fieldname": "warehouse_value_1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Warehouse Value",
+   "options": "Courier Warehouse"
+  },
+  {
+   "default": "NOT USED",
+   "fieldname": "order_warehouse_logic",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "<b>Order Warehouse</b>",
+   "options": "\nNOT USED\nAND\nOR"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-05-13 13:34:12.630379",
+ "modified_by": "Administrator",
+ "module": "OMS",
+ "name": "Courier Assignment Rule",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Master Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
