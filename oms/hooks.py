@@ -31,7 +31,10 @@ app_include_js = "/assets/oms/js/oms.js"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+	"Country" : "public/js/country.js",
+	"Contact" : "public/js/contact.js"
+	}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -98,6 +101,8 @@ override_doctype_class = {
 doc_events = {
 	"Sales Order": {
 		"on_change": "oms.oms_sales_order_controller.set_warehouse_as_per_fullfilment_rule",
+		"on_submit": "oms.oms_sales_order_controller.check_order_info_is_sufficient",
+		"validate": "oms.oms_sales_order_controller.check_order_information"
 	}
 }
 

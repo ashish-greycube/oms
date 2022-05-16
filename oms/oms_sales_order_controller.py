@@ -108,3 +108,52 @@ and so.company=%s
 	query_output.append(next_query_output[0])
 	print(query_output)
 	return query_output
+
+def check_order_info_is_sufficient(self,method):
+    if self.is_order_info_insufficient_cf==1:
+        frappe.throw(title='Insufficient Order', msg=_('Sales Order has not all the required information. You cannot submit it.',))   
+
+def check_order_information(self,method):
+    insufficient_messages=[]
+    country=None
+    if self.shipping_address_name==None or self.shipping_address_name=='':
+        insufficient_messages.append(_('Shipping address is missing'))
+    elif self.shipping_address_name:
+        address_line1,city,country=frappe.db.get_value('Address', self.shipping_address_name, ['address_line1','city','country'])
+        if address_line1==None or address_line1=='':
+            insufficient_messages.append(_('Address Line 1 is missing in shipping address {0}.'.format(self.shipping_address_name))) 
+        elif len(cstr(address_line1))<30:
+            insufficient_messages.append(_('Address Line 1 length is {0}. It should be greater than 30 characters.').format(len(cstr(address_line1))))
+        if city==None or city=='':
+            insufficient_messages.append(_('City is missing in shipping address {0}.'.format(self.shipping_address_name)))        
+        if country==None or country=='':
+            insufficient_messages.append(_('Country is missing in shipping address {0}.'.format(self.shipping_address_name))) 
+
+    if self.contact_phone==None or self.contact_phone=='':
+        insufficient_messages.append(_('Contact phone is missing'))
+    elif self.contact_phone and country:   
+        country_calling_codes_cf = frappe.db.get_value('Country', country, 'country_calling_codes_cf') 
+        if country_calling_codes_cf==None or country_calling_codes_cf=='':
+            insufficient_messages.append(_('Country calling code is missing in {0}.'.format(country)))   
+        else:
+            country_code_start=self.contact_phone.find("+")
+            country_code_end=self.contact_phone.find("-")   
+            if country_code_start==-1:
+                insufficient_messages.append(_('Country code in phone number doesnot start with "+" {0}.'.format(self.contact_phone))) 
+            elif country_code_end==-1:
+                insufficient_messages.append(_('There should be "-" between calling code and phone number. {0}.'.format(self.contact_phone)))
+            else:
+                country_code_in_phone=self.contact_phone[country_code_start:country_code_end]  
+                if country_code_in_phone!= country_calling_codes_cf:
+                    insufficient_messages.append(_('Country code in phone number is {0}. It doesnot match code {1} mentioned in country.'
+                    .format(country_code_in_phone,country_calling_codes_cf))) 
+
+
+
+    if len(insufficient_messages)>0:
+        self.is_order_info_insufficient_cf==1
+        self.order_info_insufficient_reason_cf='\n'.join(insufficient_messages) 
+    else:
+        self.is_order_info_insufficient_cf=0
+        self.order_info_insufficient_reason_cf=None
+
