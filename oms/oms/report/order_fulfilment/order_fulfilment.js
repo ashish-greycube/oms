@@ -23,5 +23,11 @@ frappe.query_reports["Order Fulfilment"] = {
 				}
 			}			
 		},		
+		{
+			'fieldname': 'show_insufficient_items',
+			'label': __("Show Insufficient Items?"),
+			'fieldtype': 'Check',
+			'default': 0
+		}		
 	]
 };

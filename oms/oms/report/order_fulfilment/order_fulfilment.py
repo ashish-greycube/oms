@@ -26,12 +26,13 @@ def get_columns():
 		{"fieldname": "client", "label": _("Client"), "fieldtype": "Link","options": "Customer", "width": 120},
 		{"fieldname": "program", "label": _("Program"), "fieldtype": "Link","options": "Project", "width": 120},
 		{"fieldname": "status", "label": _("Order Status"), "fieldtype": "Data", "width": 150},
-		{"fieldname": "marked_shipped", "label": _("Marked Shipped?"), "fieldtype": "Check", "width": 150},
+		{"fieldname": "marked_shipped", "label": _("Marked Shipped?"), "fieldtype": "Select","options": "No/nYes", "width": 150},
 		{"fieldname": "notes_cf", "label": _("Notes"), "fieldtype": "Small Text", "width": 150},
 		{"fieldname": "contact_phone", "label": _("Phone #"), "fieldtype": "Data", "width": 150},
 		{"fieldname": "contact_email", "label": _("Email"), "fieldtype": "Data", "width": 150},
 		{"fieldname": "city", "label": _("City"), "fieldtype": "Data", "width": 150},
 		{"fieldname": "state", "label": _("State"), "fieldtype": "Data", "width": 150},
+		{"fieldname": "country", "label": _("Country"), "fieldtype": "Data", "width": 150},
 		{"fieldname": "pincode", "label": _("Zip Code"), "fieldtype": "Data", "width": 150},
 		{"fieldname": "address_line1", "label": _("Address Line 1"), "fieldtype": "Data", "width": 150},
 		{"fieldname": "address_line2", "label": _("Address Line 2"), "fieldtype": "Data", "width": 150},
@@ -66,9 +67,19 @@ def get_data(filters):
 
 def sales_order_query_with_fulfilment_reuslt(filters):
 	report_conditions = get_conditions(filters)
+
+	show_insufficient_items=filters.get('show_insufficient_items')
+	if show_insufficient_items==1:
+		report_conditions += " AND SO_item.qty > SO_item.actual_qty AND SO_item.delivered_qty=0"
+	else:
+		report_conditions += " AND SO_item.actual_qty> SO_item.qty"
+			
 	warehouse=filters.get('warehouse')
 	if warehouse:
 		report_conditions += " AND SO_item.warehouse = '%s' " % (warehouse)
+
+
+
 	print('11-'*100)
 	print('report_conditions',report_conditions)
 	query_output=frappe.db.sql(
@@ -83,12 +94,13 @@ SO.creation as creation,
 SO.customer as client,
 SO.project as program,
 SO.status as status,
-IF(SO.per_delivered=100,1,0) as marked_shipped,
+IF(SO.per_delivered=100,'Yes','No') as marked_shipped,
 SO.notes_cf as notes_cf,
 SO.contact_phone as contact_phone,
 SO.contact_email as contact_email,
 address.city as city,
 address.state as state,
+address.country as country,
 address.pincode as pincode,
 address.address_line1 as address_line1,
 address.address_line2 as address_line2,
@@ -102,6 +114,7 @@ SO_item.item_name as product_name,
 SO_item.warehouse as so_item_warehouse,
 SO_item.stock_uom as stock_uom,
 SO_item.actual_qty as actual_qty ,
+SO_item.delivered_qty as delivered_qty,
 SO_item.fulfilment_center_assignment_rule_cf as applied_fulfilment_rule,
 SO_item.fulfilment_rule_result_cf as fulfilment_rule_result,
 SO_item.idx
@@ -116,7 +129,7 @@ inner join `tabItem Default` item_default
 on item.item_code =item_default.parent  
 left outer join `tabDelivery Note Item` delivery_note_item
 on delivery_note_item.so_detail =SO_item.name
-where SO.docstatus in (0,1) {report_conditions} 
+where SO.docstatus=1 {report_conditions} 
 order by SO.name desc, SO_item.idx asc
 """.format(report_conditions=report_conditions),as_dict=1,debug=1)
 	print(query_output,'query_output')

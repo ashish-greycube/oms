@@ -110,7 +110,7 @@ and so.company=%s
 	return query_output
 
 def check_order_info_is_sufficient(self,method):
-    if self.is_order_info_insufficient_cf==1:
+    if self.is_order_info_sufficient_cf=='No':
         frappe.throw(title='Insufficient Order', msg=_('Sales Order has not all the required information. You cannot submit it.',))   
 
 def check_order_information(self,method):
@@ -151,9 +151,11 @@ def check_order_information(self,method):
 
 
     if len(insufficient_messages)>0:
-        self.is_order_info_insufficient_cf==1
+        self.is_order_info_sufficient_cf='No'
         self.order_info_insufficient_reason_cf='\n'.join(insufficient_messages) 
     else:
-        self.is_order_info_insufficient_cf=0
+        self.is_order_info_insufficient_cf='Yes'
         self.order_info_insufficient_reason_cf=None
+    print('-'*10)
+    print(self.is_order_info_sufficient_cf,self.order_info_insufficient_reason_cf)
 
