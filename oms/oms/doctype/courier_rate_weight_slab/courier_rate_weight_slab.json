@@ -1,0 +1,39 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-05-27 09:01:48.828053",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "upto_weight_in_kg",
+  "rate"
+ ],
+ "fields": [
+  {
+   "fieldname": "upto_weight_in_kg",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Upto Weight in kg",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Rate",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-05-27 09:01:48.828053",
+ "modified_by": "Administrator",
+ "module": "OMS",
+ "name": "Courier Rate Weight Slab",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

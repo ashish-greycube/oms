@@ -1,0 +1,203 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "MCRC.#",
+ "creation": "2022-05-27 09:01:52.724074",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "courier",
+  "source_country",
+  "destination_country",
+  "zone",
+  "cb_1",
+  "service_type",
+  "is_tracking_available",
+  "maximum_weight_allowed_in_kg",
+  "maximum_height_allowed_in_mm",
+  "maximum_width_allowed_in_mm",
+  "maximum_length_allowed_in_mm",
+  "rate_information_section",
+  "courier_rate_weight_slab"
+ ],
+ "fields": [
+  {
+   "fieldname": "source_country",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Source Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "destination_country",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Destination Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "zone",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Zone",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "service_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Service Type",
+   "options": "Courier Service Type",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "depends_on": "eval:doc.service_type",
+   "fetch_from": "service_type.is_tracking_available",
+   "fieldname": "is_tracking_available",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "is Tracking Available",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "description": "leave it to 0 , if no max limit applicable",
+   "fieldname": "maximum_weight_allowed_in_kg",
+   "fieldtype": "Float",
+   "label": "Maximum Weight Allowed in Kg"
+  },
+  {
+   "description": "leave it to 0 , if no max limit applicable",
+   "fieldname": "maximum_height_allowed_in_mm",
+   "fieldtype": "Float",
+   "label": "Maximum Height Allowed in mm"
+  },
+  {
+   "description": "leave it to 0 , if no max limit applicable",
+   "fieldname": "maximum_width_allowed_in_mm",
+   "fieldtype": "Float",
+   "label": "Maximum Width Allowed in mm"
+  },
+  {
+   "description": "leave it to 0 , if no max limit applicable",
+   "fieldname": "maximum_length_allowed_in_mm",
+   "fieldtype": "Float",
+   "label": "Maximum Length Allowed in mm"
+  },
+  {
+   "fieldname": "rate_information_section",
+   "fieldtype": "Section Break",
+   "label": "Rate Information"
+  },
+  {
+   "fieldname": "courier_rate_weight_slab",
+   "fieldtype": "Table",
+   "label": "Courier Rate Weight Slab",
+   "options": "Courier Rate Weight Slab"
+  },
+  {
+   "fieldname": "courier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Courier",
+   "options": "Supplier",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-05-27 09:13:11.701105",
+ "modified_by": "Administrator",
+ "module": "OMS",
+ "name": "Courier Rate Card",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Master Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
