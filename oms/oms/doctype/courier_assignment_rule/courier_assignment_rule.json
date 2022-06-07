@@ -11,6 +11,7 @@
   "rule_name",
   "disable",
   "supplier",
+  "courier_service_type",
   "cb_1",
   "rule_description",
   "general_sb",
@@ -95,7 +96,8 @@
    "fieldname": "supplier",
    "fieldtype": "Link",
    "label": "For Courier",
-   "options": "Supplier"
+   "options": "Supplier",
+   "reqd": 1
   },
   {
    "fieldname": "cb_1",
@@ -449,11 +451,18 @@
    "in_list_view": 1,
    "label": "<b>Order Warehouse</b>",
    "options": "\nNOT USED\nAND\nOR"
+  },
+  {
+   "fieldname": "courier_service_type",
+   "fieldtype": "Link",
+   "label": "Courier Service Type",
+   "options": "Courier Service Type",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-05-13 13:34:12.630379",
+ "modified": "2022-06-06 08:12:43.085485",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "Courier Assignment Rule",

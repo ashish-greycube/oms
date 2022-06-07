@@ -1,57 +1,60 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:courier_service_type",
- "creation": "2022-05-27 08:45:06.893132",
+ "autoname": "CPCS.#",
+ "creation": "2022-05-31 12:28:17.860879",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "courier_service_type",
-  "is_tracking_available",
-  "minimum_days",
-  "maximum_days"
+  "customer",
+  "destination_country",
+  "item_code",
+  "shipping_fees"
  ],
  "fields": [
   {
-   "fieldname": "courier_service_type",
-   "fieldtype": "Data",
+   "fieldname": "customer",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Courier Service Type",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "default": "1",
-   "fieldname": "is_tracking_available",
-   "fieldtype": "Check",
-   "in_list_view": 1,
-   "label": "is Tracking Available",
+   "in_standard_filter": 1,
+   "label": "Customer",
+   "options": "Customer",
    "reqd": 1
   },
   {
-   "fieldname": "minimum_days",
-   "fieldtype": "Int",
+   "fieldname": "destination_country",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Minimum Days",
-   "non_negative": 1
+   "label": "Destination Country",
+   "options": "Country",
+   "reqd": 1
   },
   {
-   "fieldname": "maximum_days",
-   "fieldtype": "Int",
+   "fieldname": "shipping_fees",
+   "fieldtype": "Currency",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Maximum Days",
-   "non_negative": 1
+   "label": "Shipping Fees",
+   "reqd": 1
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Product",
+   "options": "Item",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-05-30 11:56:39.276921",
+ "modified": "2022-05-31 12:29:39.691085",
  "modified_by": "Administrator",
  "module": "OMS",
- "name": "Courier Service Type",
+ "name": "Customer Product Shipping Fees",
  "owner": "Administrator",
  "permissions": [
   {
@@ -97,32 +100,16 @@
    "read": 1,
    "report": 1,
    "role": "Sales User",
-   "share": 1,
-   "write": 1
+   "share": 1
   },
   {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Sales Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Sales Master Manager",
-   "share": 1,
-   "write": 1
+   "role": "Stock User",
+   "share": 1
   }
  ],
  "sort_field": "modified",
