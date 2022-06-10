@@ -44,7 +44,7 @@ def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 					'weight':'DN.total_net_weight'
 					}
 	courier_rules=frappe.db.get_list('Courier Assignment Rule',filters={'disable': '0'},fields=['name'], order_by='creation desc',as_list=False)
-	item_weights=" where weight_slab.upto_weight_in_kg <=%s and weight_slab.upto_weight_in_kg >=%s " % (total_net_weight,total_net_weight)
+	item_weights=" where weight_slab.upto_weight_in_kg >=%s " % (total_net_weight)
 
 	for doc in courier_rules:
 		rules_conditions = ""
