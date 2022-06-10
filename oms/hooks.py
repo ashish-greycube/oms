@@ -105,7 +105,7 @@ doc_events = {
 		"validate": "oms.oms_sales_order_controller.check_order_information"
 	},
 	"Delivery Note": {
-		"validate": "oms.oms_delivery_note_controller.set_courier_as_per_assignment_rule",
+		"on_change": "oms.oms_delivery_note_controller.set_courier_as_per_assignment_rule",
 	}
 }
 

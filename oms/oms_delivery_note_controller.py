@@ -3,24 +3,25 @@ from frappe import _
 from frappe.utils import flt, getdate,get_date_str
 
 def set_courier_as_per_assignment_rule(self,method):
+	modified=False
 	if self.get("items"):
 		courier_based_on_criteria=find_courier_based_on_creiteria(self.items[0].name,self.total_net_weight)
 		print('courier_based_on_criteria'*100,courier_based_on_criteria)
 		if len(courier_based_on_criteria)>0:
-			self.courier_cf=courier_based_on_criteria[0].courier
-			self.courier_service_type_cf=courier_based_on_criteria[0].courier_service_type
-			self.courier_charge_cf=courier_based_on_criteria[0].rate
-			# frappe.db.set_value('Delivery Note', self.name, {
-			# 	'courier_cf': courier_based_on_criteria[0].courier,
-			# 	'courier_service_type_cf': courier_based_on_criteria[0].courier_service_type,
-			# 	'courier_charge_cf':courier_based_on_criteria[0].rate
-			# })
+			# self.courier_cf=courier_based_on_criteria[0].courier
+			# self.courier_service_type_cf=courier_based_on_criteria[0].courier_service_type
+			# self.courier_charge_cf=courier_based_on_criteria[0].rate
 			frappe.msgprint(_("Courier <b>{0}</b> of service type <b>{1}</b> with rate {2} is set")
 			.format(courier_based_on_criteria[0].courier,courier_based_on_criteria[0].courier_service_type,frappe.bold(courier_based_on_criteria[0].rate)),alert=1,indicator="yellow")  
-			# self.notify_update()
-			# self.reload()
+			frappe.db.set_value('Delivery Note', self.name, 'courier_cf', courier_based_on_criteria[0].courier)
+			frappe.db.set_value('Delivery Note', self.name, 'courier_service_type_cf', courier_based_on_criteria[0].courier_service_type)
+			frappe.db.set_value('Delivery Note', self.name, 'courier_charge_cf', courier_based_on_criteria[0].rate)
+			modified=True
 		else:
-			frappe.msgprint(_("No matching courier details found for item {0}").format(frappe.bold(self.items[0].name)),alert=1,indicator="red")                
+			frappe.msgprint(_("No matching courier details found for item {0}").format(frappe.bold(self.items[0].item_name)),alert=1,indicator="red")  
+
+	if modified==True:
+		self.reload()
 
 def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 	result_data=[]
