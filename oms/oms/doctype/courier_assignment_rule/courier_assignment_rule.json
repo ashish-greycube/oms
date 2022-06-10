@@ -159,13 +159,13 @@
    "fieldname": "order_warehouse_condition",
    "fieldtype": "Select",
    "label": "Order Warehouse Condition",
-   "options": "\n>\n<\nbetween"
+   "options": "\nIN\nNOT IN"
   },
   {
    "fieldname": "order_created_date_condition",
    "fieldtype": "Select",
    "label": "Order Condition",
-   "options": "\nIN\nNOT IN"
+   "options": "\n>\n<\nbetween"
   },
   {
    "fieldname": "client_condition",
@@ -436,7 +436,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-06-09 08:01:10.433116",
+ "modified": "2022-06-10 09:07:51.700478",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "Courier Assignment Rule",
