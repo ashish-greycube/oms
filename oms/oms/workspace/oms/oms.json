@@ -76,6 +76,65 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Shipment Center",
+   "link_type": "DocType",
+   "onboard": 0,
+   "only_for": "",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Courier Assignment Rule",
+   "link_to": "Courier Assignment Rule",
+   "link_type": "DocType",
+   "onboard": 0,
+   "only_for": "",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Courier Rate Card",
+   "link_to": "Courier Rate Card",
+   "link_type": "DocType",
+   "onboard": 0,
+   "only_for": "",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Courier Service Type",
+   "link_to": "Courier Service Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "only_for": "",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "OMS Settings",
+   "link_to": "OMS Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "only_for": "",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Customer Product Shipping Fees",
+   "link_to": "Customer Product Shipping Fees",
+   "link_type": "DocType",
+   "onboard": 0,
+   "only_for": "",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Transaction",
    "link_type": "DocType",
    "onboard": 0,
@@ -89,6 +148,16 @@
    "link_to": "Sales Order",
    "link_type": "DocType",
    "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Delivery Note",
+   "link_to": "Delivery Note",
+   "link_type": "DocType",
+   "onboard": 0,
+   "only_for": "",
    "type": "Link"
   },
   {
@@ -119,7 +188,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-05-04 09:52:36.991058",
+ "modified": "2022-06-08 08:56:48.328893",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "OMS",

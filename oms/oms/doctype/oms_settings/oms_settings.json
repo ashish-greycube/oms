@@ -14,7 +14,8 @@
    "fieldname": "auto_courier_assignment_priority",
    "fieldtype": "Table",
    "label": "Auto Courier Assignment Priority",
-   "options": "Auto Courier Assignment Priority"
+   "options": "Auto Courier Assignment Priority",
+   "reqd": 1
   },
   {
    "fieldname": "shipping_charge_account",
@@ -28,7 +29,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-06-06 08:24:47.019673",
+ "modified": "2022-06-10 07:52:01.026115",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "OMS Settings",
