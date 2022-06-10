@@ -15,7 +15,7 @@ def set_courier_as_per_assignment_rule(self,method):
 			.format(courier_based_on_criteria[0].courier,courier_based_on_criteria[0].courier_service_type,frappe.bold(courier_based_on_criteria[0].rate)),alert=1,indicator="yellow")  
 			frappe.db.set_value('Delivery Note', self.name, 'courier_cf', courier_based_on_criteria[0].courier)
 			frappe.db.set_value('Delivery Note', self.name, 'courier_service_type_cf', courier_based_on_criteria[0].courier_service_type)
-			frappe.db.set_value('Delivery Note', self.name, 'courier_charge_cf', courier_based_on_criteria[0].rate)
+			frappe.db.set_value('Delivery Note', self.name, 'courier_charge_cf', courier_based_on_criteria[0].rate or 0)
 			modified=True
 		else:
 			frappe.msgprint(_("No matching courier details found for item {0}").format(frappe.bold(self.items[0].item_name)),alert=1,indicator="red")  
@@ -87,7 +87,7 @@ def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 			frappe.msgprint(_("Courier Assignment Rule {0} is applied.").format(frappe.bold(rule.name)),alert=1,indicator="green")                
 			data.update({"courier":rule.supplier})
 			data.update({"courier_service_type":rule.courier_service_type})
-			rate=get_rate_based_on_courier_detail(item_weights)
+			rate=get_rate_based_on_courier_detail(item_weights,data.get('source_country'),data.get('destination_country'),rule.supplier,rule.courier_service_type)
 			if len(rate)>0:
 				data.update({"rate":rate[0].rate})
 			result_data.append(data)
@@ -106,7 +106,7 @@ def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 	return result_data	       
 
 #  case A : to find rate for courier assignment rule
-def get_rate_based_on_courier_detail(item_weights):
+def get_rate_based_on_courier_detail(item_weights,source_country,destination_country,courier,courier_service_type):
 	order_by_result=frappe.db.sql("""select 
 										case courier_criteria  
 										when 'Least Price' THEN 'weight_slab.rate'
@@ -130,13 +130,13 @@ def get_rate_based_on_courier_detail(item_weights):
 									inner join `tabCourier Rate Weight Slab` weight_slab 
 									on weight_slab.parent=courier_rate_card.name
 									{item_weights} 
-									and courier_rate_card.source_country ='United Arab Emirates'
-									and courier_rate_card.destination_country ='United Arab Emirates'
-									and courier_rate_card.courier='test_supp'
-									and courier_rate_card.service_type='express'
+									and courier_rate_card.source_country =%s
+									and courier_rate_card.destination_country =%s
+									and courier_rate_card.courier=%s
+									and courier_rate_card.service_type=%s
 									{order_by_condition}
 									limit 1"""
-									.format(item_weights=item_weights,order_by_condition=order_by_condition),as_dict=1,debug=1)
+									.format(item_weights=item_weights,order_by_condition=order_by_condition),(source_country,destination_country,courier,courier_service_type),as_dict=1,debug=1)
 	return query_output		
 
 # case B : find matching courier rate card
