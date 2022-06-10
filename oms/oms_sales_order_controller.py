@@ -110,6 +110,7 @@ and so.company=%s
 	return query_output
 
 def check_order_info_is_sufficient(self,method):
+    print('--self.is_order_info_sufficient_cf',self.is_order_info_sufficient_cf)
     if self.is_order_info_sufficient_cf=='No':
         frappe.throw(title='Insufficient Order', msg=_('Sales Order has not all the required information. You cannot submit it.',))   
 
@@ -147,15 +148,32 @@ def check_order_information(self,method):
                 if country_code_in_phone!= country_calling_codes_cf:
                     insufficient_messages.append(_('Country code in phone number is {0}. It doesnot match code {1} mentioned in country.'
                     .format(country_code_in_phone,country_calling_codes_cf))) 
-
+    print('country',country)
+    if country:
+        # shipping charges
+        shipping_fees=frappe.db.get_list('Customer Product Shipping Fees', filters={'customer': ['=', self.customer], 
+                        'destination_country': ['=', country], 'item_code': ['=', self.items[0].item_code]},fields=['shipping_fees'])
+        account_head=frappe.db.get_single_value('OMS Settings', 'shipping_charge_account')
+        print('shipping_fees',shipping_fees)
+        if len(shipping_fees)>0:
+            query_output=frappe.db.sql("""select name from `tabSales Taxes and Charges` 
+                        where parent=%s and charge_type ='Actual'and account_head =%s""",(self.name,account_head),as_dict=1,debug=1)  
+            print('query_output',query_output)    
+            if len(query_output)==0:      
+                self.append('taxes',{'charge_type':'Actual','account_head':account_head,'tax_amount':shipping_fees[0].shipping_fees,'description':account_head})
+        else:
+            insufficient_messages.append(_('Shipping fees not found for customer: {0}, destination:{1} and item:{2}.'
+            .format(self.customer,country, self.items[0].item_name)))             
+                
 
 
     if len(insufficient_messages)>0:
         self.is_order_info_sufficient_cf='No'
         self.order_info_insufficient_reason_cf='\n'.join(insufficient_messages) 
     else:
-        self.is_order_info_insufficient_cf='Yes'
+        print('else'*100)
+        self.is_order_info_sufficient_cf='Yes'
         self.order_info_insufficient_reason_cf=None
     print('-'*10)
-    print(self.is_order_info_sufficient_cf,self.order_info_insufficient_reason_cf)
+    print(insufficient_messages,len(insufficient_messages),self.is_order_info_sufficient_cf,self.order_info_insufficient_reason_cf)
 

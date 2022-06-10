@@ -8,9 +8,6 @@ frappe.ui.form.on('Courier Assignment Rule', {
 	order_created_date_condition: function (frm) {
 		from_to_fields_setup(frm, 'order_created_date_condition', 'order_created_date_value_1', 'order_created_date_value_2', 'Order Date')
 	},
-	selling_price_condition: function (frm) {
-		from_to_fields_setup(frm, 'selling_price_condition', 'selling_price_value_1', 'selling_price_value_2', 'Selling Price')
-	},
 	product_margin_condition: function (frm) {
 		from_to_fields_setup(frm, 'product_margin_condition', 'product_margin_value_1', 'product_margin_value_2', 'Product Margin')
 	},
@@ -34,7 +31,6 @@ frappe.ui.form.on('Courier Assignment Rule', {
 function hide_show_all_to_fields(frm) {
 	$('[data-fieldname=product_blank_value_2]').css("visibility", "hidden");
 	from_to_fields_setup(frm, 'order_created_date_condition', 'order_created_date_value_1', 'order_created_date_value_2', 'Order Date')
-	from_to_fields_setup(frm, 'selling_price_condition', 'selling_price_value_1', 'selling_price_value_2', 'Selling Price')
 	from_to_fields_setup(frm, 'product_margin_condition', 'product_margin_value_1', 'product_margin_value_2', 'Product Margin')
 	from_to_fields_setup(frm, 'length_condition', 'length_value_1', 'length_value_2', 'Length')
 	from_to_fields_setup(frm, 'width_condition', 'width_value_1', 'width_value_2', 'Width')

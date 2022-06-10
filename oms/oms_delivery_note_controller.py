@@ -76,6 +76,8 @@ def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 						.format(' ,'.join(frappe.db.escape(i) for i in in_values)) 
 		print('rules_conditions',rules_conditions)
 		find_DN_matching_courier_rule=delivery_note_query(report_conditions,rules_conditions,rules_filter_values)
+		if len(find_DN_matching_courier_rule)>0:
+			break
 		print('find_DN_matching_courier_rule',find_DN_matching_courier_rule)
 
 	# case A: found courier based on courier assignment rule
@@ -240,3 +242,13 @@ def delivery_note_query(report_conditions,rules_conditions,rules_filter_values):
 									{report_conditions} {rules_conditions} limit 1"""
 									.format(report_conditions=report_conditions,rules_conditions=rules_conditions),rules_filter_values,as_dict=1,debug=1)
 	return query_output	    
+
+def compare_shipping_charges_against_courier_charges(self,method):
+	if self.items[0].against_sales_order:
+		account_head=frappe.db.get_single_value('OMS Settings', 'shipping_charge_account')
+		query_output=frappe.db.sql("""select tax_amount from `tabSales Taxes and Charges` 
+					where parent=%s and charge_type ='Actual'and account_head =%s""",(self.items[0].against_sales_order,account_head),as_dict=1,debug=1) 		
+		if len(query_output)>0:
+			customer_shipping_fee=query_output[0].tax_amount
+			if self.courier_charge_cf>customer_shipping_fee:
+				frappe.throw(_("Courier charge is {0}, which is greater than customer shipping fee {1}").format(frappe.bold(self.courier_charge_cf),frappe.bold(customer_shipping_fee)))
