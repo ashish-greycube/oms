@@ -242,35 +242,35 @@
    "default": "NOT USED",
    "fieldname": "length_logic",
    "fieldtype": "Select",
-   "label": "<b>Length</b>",
+   "label": "<b>Length (in mm)</b>",
    "options": "\nNOT USED\nAND\nOR"
   },
   {
    "default": "NOT USED",
    "fieldname": "width_logic",
    "fieldtype": "Select",
-   "label": "<b>Width</b>",
+   "label": "<b>Width(in mm)</b>",
    "options": "\nNOT USED\nAND\nOR"
   },
   {
    "default": "NOT USED",
    "fieldname": "height_logic",
    "fieldtype": "Select",
-   "label": "<b>Height</b>",
+   "label": "<b>Height (in mm)</b>",
    "options": "\nNOT USED\nAND\nOR"
   },
   {
    "default": "NOT USED",
    "fieldname": "volume_logic",
    "fieldtype": "Select",
-   "label": "<b>Volume</b>",
+   "label": "<b>Volume (in cubic mm)</b>",
    "options": "\nNOT USED\nAND\nOR"
   },
   {
    "default": "NOT USED",
    "fieldname": "weight_logic",
    "fieldtype": "Select",
-   "label": "<b>Weight</b>",
+   "label": "<b>Weight (in Kg)</b>",
    "options": "\nNOT USED\nAND\nOR"
   },
   {
@@ -453,7 +453,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-15 07:58:40.777363",
+ "modified": "2022-06-10 09:26:25.970214",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "Fulfilment Center Assignment Rule",
