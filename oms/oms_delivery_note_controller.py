@@ -1,6 +1,6 @@
 import frappe
 from frappe import _
-from frappe.utils import flt, getdate,get_date_str
+from frappe.utils import flt, getdate,get_date_str,has_common
 
 def set_courier_as_per_assignment_rule(self,method):
 	if self.docstatus==0:
@@ -242,11 +242,13 @@ def delivery_note_query(report_conditions,rules_conditions,rules_filter_values):
 	return query_output	    
 
 def compare_shipping_charges_against_courier_charges(self,method):
-	if self.items[0].against_sales_order:
-		account_head=frappe.db.get_single_value('OMS Settings', 'shipping_charge_account')
-		query_output=frappe.db.sql("""select tax_amount from `tabSales Taxes and Charges` 
-					where parent=%s and charge_type ='Actual'and account_head =%s""",(self.name,account_head),as_dict=1,debug=1) 		
-		if len(query_output)>0:
-			customer_shipping_fee=query_output[0].tax_amount
-			if self.courier_charge_cf>customer_shipping_fee:
-				frappe.throw(_("Courier charge is {0}, which is greater than customer shipping fee {1}").format(frappe.bold(self.courier_charge_cf),frappe.bold(customer_shipping_fee)))
+	courier_manager=frappe.db.get_single_value('OMS Settings', 'courier_manager')
+	if not has_common(courier_manager, frappe.get_roles()) :
+		if self.items[0].against_sales_order:
+			account_head=frappe.db.get_single_value('OMS Settings', 'shipping_charge_account')
+			query_output=frappe.db.sql("""select tax_amount from `tabSales Taxes and Charges` 
+						where parent=%s and charge_type ='Actual'and account_head =%s""",(self.name,account_head),as_dict=1,debug=1) 		
+			if len(query_output)>0:
+				customer_shipping_fee=query_output[0].tax_amount
+				if self.courier_charge_cf>customer_shipping_fee:
+					frappe.throw(_("Courier charge is {0}, which is greater than customer shipping fee {1}").format(frappe.bold(self.courier_charge_cf),frappe.bold(customer_shipping_fee)))

@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "shipping_charge_account",
+  "courier_manager",
   "auto_courier_assignment_priority"
  ],
  "fields": [
@@ -24,12 +25,19 @@
    "label": "Shipping Charge Account",
    "options": "Account",
    "reqd": 1
+  },
+  {
+   "description": "Will be allowed to override courier margin validation in Delivery Note",
+   "fieldname": "courier_manager",
+   "fieldtype": "Link",
+   "label": "Courier Manager",
+   "options": "Role"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-06-10 09:46:11.635648",
+ "modified": "2022-06-11 10:30:25.522660",
  "modified_by": "Administrator",
  "module": "OMS",
  "name": "OMS Settings",

@@ -33,7 +33,8 @@ app_include_js = "/assets/oms/js/oms.js"
 # include js in doctype views
 doctype_js = {
 	"Country" : "public/js/country.js",
-	"Contact" : "public/js/contact.js"
+	"Contact" : "public/js/contact.js",
+	"Delivery Note" : "public/js/delivery_note.js",
 	}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -106,7 +107,7 @@ doc_events = {
 	},
 	"Delivery Note": {
 		"on_change": "oms.oms_delivery_note_controller.set_courier_as_per_assignment_rule",
-		"on_submit": "oms.oms_delivery_note_controller.compare_shipping_charges_against_courier_charges",
+		# "on_submit": "oms.oms_delivery_note_controller.compare_shipping_charges_against_courier_charges",
 		
 	}
 }
