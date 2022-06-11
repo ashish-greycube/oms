@@ -3,25 +3,22 @@ from frappe import _
 from frappe.utils import flt, getdate,get_date_str
 
 def set_courier_as_per_assignment_rule(self,method):
-	modified=False
-	if self.get("items"):
-		courier_based_on_criteria=find_courier_based_on_creiteria(self.items[0].name,self.total_net_weight)
-		print('courier_based_on_criteria'*100,courier_based_on_criteria)
-		if len(courier_based_on_criteria)>0:
-			# self.courier_cf=courier_based_on_criteria[0].courier
-			# self.courier_service_type_cf=courier_based_on_criteria[0].courier_service_type
-			# self.courier_charge_cf=courier_based_on_criteria[0].rate
-			frappe.msgprint(_("Courier <b>{0}</b> of service type <b>{1}</b> with rate {2} is set")
-			.format(courier_based_on_criteria[0].courier,courier_based_on_criteria[0].courier_service_type,frappe.bold(courier_based_on_criteria[0].rate)),alert=1,indicator="yellow")  
-			frappe.db.set_value('Delivery Note', self.name, 'courier_cf', courier_based_on_criteria[0].courier)
-			frappe.db.set_value('Delivery Note', self.name, 'courier_service_type_cf', courier_based_on_criteria[0].courier_service_type)
-			frappe.db.set_value('Delivery Note', self.name, 'courier_charge_cf', courier_based_on_criteria[0].rate or 0)
-			modified=True
-		else:
-			frappe.msgprint(_("No matching courier details found for item {0}").format(frappe.bold(self.items[0].item_name)),alert=1,indicator="red")  
+	if self.docstatus==0:
+		if self.get("items"):
+			courier_based_on_criteria=find_courier_based_on_creiteria(self.items[0].name,self.total_net_weight)
+			print('courier_based_on_criteria'*100,courier_based_on_criteria)
+			if len(courier_based_on_criteria)>0:
+				# self.courier_cf=courier_based_on_criteria[0].courier
+				# self.courier_service_type_cf=courier_based_on_criteria[0].courier_service_type
+				# self.courier_charge_cf=courier_based_on_criteria[0].rate
+				frappe.msgprint(_("Courier <b>{0}</b> of service type <b>{1}</b> with rate {2} is set")
+				.format(courier_based_on_criteria[0].courier,courier_based_on_criteria[0].courier_service_type,frappe.bold(courier_based_on_criteria[0].rate)),alert=1,indicator="yellow")  
+				frappe.db.set_value('Delivery Note', self.name, 'courier_cf', courier_based_on_criteria[0].courier)
+				frappe.db.set_value('Delivery Note', self.name, 'courier_service_type_cf', courier_based_on_criteria[0].courier_service_type)
+				frappe.db.set_value('Delivery Note', self.name, 'courier_charge_cf', courier_based_on_criteria[0].rate or 0)
+			else:
+				frappe.msgprint(_("No matching courier details found for item {0}").format(frappe.bold(self.items[0].item_name)),alert=1,indicator="red")  
 
-	if modified==True:
-		self.reload()
 
 def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 	result_data=[]
@@ -76,9 +73,10 @@ def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 						.format(' ,'.join(frappe.db.escape(i) for i in in_values)) 
 		print('rules_conditions',rules_conditions)
 		find_DN_matching_courier_rule=delivery_note_query(report_conditions,rules_conditions,rules_filter_values)
+		print('find_DN_matching_courier_rule',find_DN_matching_courier_rule)
+
 		if len(find_DN_matching_courier_rule)>0:
 			break
-		print('find_DN_matching_courier_rule',find_DN_matching_courier_rule)
 
 	# case A: found courier based on courier assignment rule
 	if len(find_DN_matching_courier_rule)>0:
@@ -247,7 +245,7 @@ def compare_shipping_charges_against_courier_charges(self,method):
 	if self.items[0].against_sales_order:
 		account_head=frappe.db.get_single_value('OMS Settings', 'shipping_charge_account')
 		query_output=frappe.db.sql("""select tax_amount from `tabSales Taxes and Charges` 
-					where parent=%s and charge_type ='Actual'and account_head =%s""",(self.items[0].against_sales_order,account_head),as_dict=1,debug=1) 		
+					where parent=%s and charge_type ='Actual'and account_head =%s""",(self.name,account_head),as_dict=1,debug=1) 		
 		if len(query_output)>0:
 			customer_shipping_fee=query_output[0].tax_amount
 			if self.courier_charge_cf>customer_shipping_fee:

@@ -100,12 +100,12 @@ override_doctype_class = {
 
 doc_events = {
 	"Sales Order": {
-		"on_change": "oms.oms_sales_order_controller.set_warehouse_as_per_fullfilment_rule",
+		# "on_change": "oms.oms_sales_order_controller.set_warehouse_as_per_fullfilment_rule",
 		"on_submit": "oms.oms_sales_order_controller.check_order_info_is_sufficient",
-		"validate": "oms.oms_sales_order_controller.check_order_information"
+		"validate": ["oms.oms_sales_order_controller.check_order_information","oms.oms_sales_order_controller.set_warehouse_as_per_fullfilment_rule"]
 	},
 	"Delivery Note": {
-		"before_save": "oms.oms_delivery_note_controller.set_courier_as_per_assignment_rule",
+		"on_change": "oms.oms_delivery_note_controller.set_courier_as_per_assignment_rule",
 		"on_submit": "oms.oms_delivery_note_controller.compare_shipping_charges_against_courier_charges",
 		
 	}

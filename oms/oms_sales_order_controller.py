@@ -41,7 +41,8 @@ def set_warehouse_as_per_fullfilment_rule(self,method):
             # case 4: Manual WH set, hence no FR check
             if d.warehouse and (not d.fulfilment_center_assignment_rule_cf):
                 fulfilment_rule_result_cf='Manual'
-                frappe.db.set_value('Sales Order Item', d.name, 'fulfilment_rule_result_cf', fulfilment_rule_result_cf)
+                # frappe.db.set_value('Sales Order Item', d.name, 'fulfilment_rule_result_cf', fulfilment_rule_result_cf)
+                d.fulfilment_rule_result_cf=fulfilment_rule_result_cf
                 frappe.msgprint(_("Row # {0} : Item {1} , Warehouse is already set. <br> Hence fulfilment result is {2}").format(d.idx,d.item_name,frappe.bold(fulfilment_rule_result_cf)),alert=1,indicator="orange")                
                 modified=True
             elif not d.warehouse:
@@ -49,7 +50,8 @@ def set_warehouse_as_per_fullfilment_rule(self,method):
                 #case 3 : No FR Applicable
                 if len(output)==0:
                     fulfilment_rule_result_cf="No FR Applicable"
-                    frappe.db.set_value('Sales Order Item', d.name, 'fulfilment_rule_result_cf', fulfilment_rule_result_cf)
+                    # frappe.db.set_value('Sales Order Item', d.name, 'fulfilment_rule_result_cf', fulfilment_rule_result_cf)
+                    d.fulfilment_rule_result_cf=fulfilment_rule_result_cf
                     frappe.msgprint(_("Row # {0} : Item {1} , No matching fulfilment rule found. <br> Hence fulfilment result is {2}").format(d.idx,d.item_name,frappe.bold(fulfilment_rule_result_cf)),alert=1,indicator="red") 
                     modified=True
                 #case 1 : Single FR Applied
@@ -57,11 +59,14 @@ def set_warehouse_as_per_fullfilment_rule(self,method):
                     warehouse=output[0].warehouse
                     fulfilment_center_assignment_rule_cf=output[0].applied_fulfilment_rule
                     fulfilment_rule_result_cf="Success"
-                    frappe.db.set_value('Sales Order Item', d.name, 
-                    {'fulfilment_rule_result_cf':fulfilment_rule_result_cf,
-                    'fulfilment_center_assignment_rule_cf':fulfilment_center_assignment_rule_cf,
-                    'warehouse':warehouse
-                    })
+                    d.fulfilment_rule_result_cf=fulfilment_rule_result_cf
+                    d.fulfilment_center_assignment_rule_cf=fulfilment_center_assignment_rule_cf
+                    d.warehouse=warehouse
+                    # frappe.db.set_value('Sales Order Item', d.name, 
+                    # {'fulfilment_rule_result_cf':fulfilment_rule_result_cf,
+                    # 'fulfilment_center_assignment_rule_cf':fulfilment_center_assignment_rule_cf,
+                    # 'warehouse':warehouse
+                    # })
                     frappe.msgprint(_("Row # {0} : Item {1} , Fulfilment rule {2} found. <br> Hence warehouse set to {3} and fulfilment result is {4}")
                     .format(d.idx,d.item_name,get_link_to_form('Fulfilment Center Assignment Rule',fulfilment_center_assignment_rule_cf),warehouse,frappe.bold(fulfilment_rule_result_cf)),alert=1,indicator="green")
                     modified=True
@@ -69,12 +74,13 @@ def set_warehouse_as_per_fullfilment_rule(self,method):
                 elif len(output)>1:
                     fulfilment_rule_result_cf=' ,'.join(i.applied_fulfilment_rule+":"+i.warehouse for i in output)
                     fulfilment_rule_result_cf= 'Multiple FR -' + fulfilment_rule_result_cf
-                    frappe.db.set_value('Sales Order Item', d.name, 'fulfilment_rule_result_cf',  fulfilment_rule_result_cf)
+                    d.fulfilment_rule_result_cf=fulfilment_rule_result_cf
+                    # frappe.db.set_value('Sales Order Item', d.name, 'fulfilment_rule_result_cf',  fulfilment_rule_result_cf)
                     frappe.msgprint(_("Row # {0} : Item {1} , Multiple matching fulfilment rule found. <br> Hence fulfilment result is {2}").format(d.idx,d.item_name,frappe.bold(fulfilment_rule_result_cf)),alert=1,indicator="red") 
                     modified=True                    
     # self.save()    
-    if modified==True:
-        self.reload()
+    # if modified==True:
+        # self.reload()
     print(d.name,'output',output)
         
 @frappe.whitelist()
@@ -175,5 +181,6 @@ def check_order_information(self,method):
         self.is_order_info_sufficient_cf='Yes'
         self.order_info_insufficient_reason_cf=None
     print('-'*10)
+    # self.save()
     print(insufficient_messages,len(insufficient_messages),self.is_order_info_sufficient_cf,self.order_info_insufficient_reason_cf)
 
