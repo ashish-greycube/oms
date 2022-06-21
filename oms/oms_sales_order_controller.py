@@ -29,11 +29,9 @@ class CustomSalesOrder(SalesOrder):
 
 
 def set_warehouse_as_per_fullfilment_rule(self,method):
-    print('-'*100)
     output=''
     modified=False
     for d in self.get("items"):
-        print('d.name',d.name)
         if  (
                 frappe.get_cached_value("Item", d.item_code, "is_stock_item") == 1
                 or (self.has_product_bundle(d.item_code) and self.product_bundle_has_stock_item(d.item_code))
@@ -81,13 +79,11 @@ def set_warehouse_as_per_fullfilment_rule(self,method):
     # self.save()    
     # if modified==True:
         # self.reload()
-    print(d.name,'output',output)
         
 @frappe.whitelist()
 def get_all_so_count():	
 	company = frappe.db.get_single_value("Global Defaults", "default_company")
 
-	print('--'*10)
 	query_output=frappe.db.sql(
 		"""
 -- Order Created Date, Client, Program, Country(Destination), Brand, Product Name
@@ -97,7 +93,7 @@ inner join `tabSales Order Item` as so_item
 on so.name =so_item.parent 
 where  so.status='Draft' and (so_item.warehouse = '' or so_item.warehouse is NULL)
 and so.company=%s
-""",company,as_dict=1,debug=1)	
+""",company,as_dict=1)	
 
 	next_query_output=frappe.db.sql(
 		"""
@@ -108,15 +104,11 @@ inner join `tabSales Order Item` as so_item
 on so.name =so_item.parent 
 where  so.status='Draft' and (so_item.warehouse is NOT NULL and so_item.warehouse!='')
 and so.company=%s
-""",company,as_dict=1,debug=1)
-	print('query_output',query_output)
-	print('next_query_output',next_query_output)
+""",company,as_dict=1)
 	query_output.append(next_query_output[0])
-	print(query_output)
 	return query_output
 
 def check_order_info_is_sufficient(self,method):
-    print('--self.is_order_info_sufficient_cf',self.is_order_info_sufficient_cf)
     if self.is_order_info_sufficient_cf=='No':
         frappe.throw(title='Insufficient Order', msg=_('Sales Order has not all the required information. You cannot submit it.',))   
 
@@ -154,17 +146,14 @@ def check_order_information(self,method):
                 if country_code_in_phone!= country_calling_codes_cf:
                     insufficient_messages.append(_('Country code in phone number is {0}. It doesnot match code {1} mentioned in country.'
                     .format(country_code_in_phone,country_calling_codes_cf))) 
-    print('country',country)
     if country:
         # shipping charges
         shipping_fees=frappe.db.get_list('Customer Product Shipping Fees', filters={'customer': ['=', self.customer], 
                         'destination_country': ['=', country], 'item_code': ['=', self.items[0].item_code]},fields=['shipping_fees'])
         account_head=frappe.db.get_single_value('OMS Settings', 'shipping_charge_account')
-        print('shipping_fees',shipping_fees)
         if len(shipping_fees)>0:
             query_output=frappe.db.sql("""select name from `tabSales Taxes and Charges` 
-                        where parent=%s and charge_type ='Actual'and account_head =%s""",(self.name,account_head),as_dict=1,debug=1)  
-            print('query_output',query_output)    
+                        where parent=%s and charge_type ='Actual'and account_head =%s""",(self.name,account_head),as_dict=1)  
             if len(query_output)==0:      
                 self.append('taxes',{'charge_type':'Actual','account_head':account_head,'tax_amount':shipping_fees[0].shipping_fees,'description':account_head})
         else:
@@ -177,10 +166,7 @@ def check_order_information(self,method):
         self.is_order_info_sufficient_cf='No'
         self.order_info_insufficient_reason_cf='\n'.join(insufficient_messages) 
     else:
-        print('else'*100)
         self.is_order_info_sufficient_cf='Yes'
         self.order_info_insufficient_reason_cf=None
-    print('-'*10)
     # self.save()
-    print(insufficient_messages,len(insufficient_messages),self.is_order_info_sufficient_cf,self.order_info_insufficient_reason_cf)
 

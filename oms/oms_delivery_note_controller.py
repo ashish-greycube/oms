@@ -8,7 +8,6 @@ def set_courier_as_per_assignment_rule(self,method):
 	if self.docstatus==0:
 		if self.get("items"):
 			courier_based_on_criteria=find_courier_based_on_creiteria(self.items[0].name,self.total_net_weight)
-			print('courier_based_on_criteria'*100,courier_based_on_criteria)
 			if len(courier_based_on_criteria)>0:
 				# self.courier_cf=courier_based_on_criteria[0].courier
 				# self.courier_service_type_cf=courier_based_on_criteria[0].courier_service_type
@@ -73,9 +72,7 @@ def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 						in_values.append(value[assignment_field])
 					rules_conditions += ' ' + rule[assignment_field+'_logic'] + ' ' + doctype_field[assignment_field] + ' ' + rule[assignment_field+'_condition'] +' ({})' \
 						.format(' ,'.join(frappe.db.escape(i) for i in in_values)) 
-		print('rules_conditions',rules_conditions)
 		find_DN_matching_courier_rule=delivery_note_query(report_conditions,rules_conditions,rules_filter_values)
-		print('find_DN_matching_courier_rule',find_DN_matching_courier_rule)
 
 		if len(find_DN_matching_courier_rule)>0:
 			break
@@ -94,13 +91,11 @@ def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 				data.update({"rate":rate[0].rate})
 			result_data.append(data)
 			i=i+1
-	print('hhhhhhhhhhhhhhhhhhhhhhhhhhhresult_data',result_data)
 	# case B: not found A, find courier based on Courier Rate Card
 	if len(result_data)==0:
 		DN_matching_courier_rate_card=courier_rate_card_query(report_conditions,item_weights)
 		if len(DN_matching_courier_rate_card) >0 :
 			frappe.msgprint(_("Courier Rate Card {0} is applied.").format(frappe.bold(DN_matching_courier_rate_card[0].courier_rate_card_name)),alert=1,indicator="blue")
-			print('DN_matching_courier_rate_card',DN_matching_courier_rate_card)
 			# result_data.append({"courier":DN_matching_courier_rate_card[0].courier})
 			# result_data.append({"courier_service_type":DN_matching_courier_rate_card[0].service_type})		
 			# result_data.append({"rate":DN_matching_courier_rate_card[0].rate})	
@@ -117,9 +112,7 @@ def get_rate_based_on_courier_detail(item_weights,source_country,destination_cou
 										END as courier_criteria
 										from `tabAuto Courier Assignment Priority`
 										order by idx ASC""",as_dict=1)
-	print('order_by_result',order_by_result)
 	order_by_list = [d.courier_criteria for d in order_by_result]
-	print('order_by_list',order_by_list)
 	order_by_condition="order by " +", ".join(order_by_list)
 
 	query_output=frappe.db.sql("""select weight_slab.upto_weight_in_kg ,weight_slab.rate ,courier_service_type.is_tracking_available , courier_service_type.maximum_days ,
@@ -138,7 +131,7 @@ def get_rate_based_on_courier_detail(item_weights,source_country,destination_cou
 									and courier_rate_card.service_type=%s
 									{order_by_condition}
 									limit 1"""
-									.format(item_weights=item_weights,order_by_condition=order_by_condition),(source_country,destination_country,courier,courier_service_type),as_dict=1,debug=1)
+									.format(item_weights=item_weights,order_by_condition=order_by_condition),(source_country,destination_country,courier,courier_service_type),as_dict=1)
 	return query_output		
 
 # case B : find matching courier rate card
@@ -151,12 +144,9 @@ def courier_rate_card_query(report_conditions,item_weights):
 										END as courier_criteria
 										from `tabAuto Courier Assignment Priority`
 										order by idx ASC""",as_dict=1)
-	print('order_by_result',order_by_result)
 	order_by_list = [d.courier_criteria for d in order_by_result]
-	print('order_by_list',order_by_list)
 	order_by_condition="order by " +", ".join(order_by_list)
 	# order_by_condition="order by " + ", ".join(["%s"] * len(order_by_list))
-	print('xxx----------order_by_condition',order_by_condition)
 	query_output=frappe.db.sql("""with 
 									courier_detail as (select weight_slab.upto_weight_in_kg ,weight_slab.rate ,courier_service_type.is_tracking_available , courier_service_type.maximum_days ,
 									courier_rate_card.name,courier_rate_card.courier,courier_rate_card.service_type,
@@ -200,13 +190,11 @@ def courier_rate_card_query(report_conditions,item_weights):
 									and IF(courier_detail.maximum_width_allowed_in_mm, dn_detail.width <= courier_detail.maximum_width_allowed_in_mm ,1=1)
 									{order_by_condition}
 									limit 1"""
-									.format(report_conditions=report_conditions,item_weights=item_weights,order_by_condition=order_by_condition),as_dict=1,debug=1)
+									.format(report_conditions=report_conditions,item_weights=item_weights,order_by_condition=order_by_condition),as_dict=1)
 	return query_output	
 
 # case A : check if DN matched the defined courier assignment rules
 def delivery_note_query(report_conditions,rules_conditions,rules_filter_values):
-	print("report_conditions,rules_filter_values,rules_conditions")
-	print(report_conditions,rules_filter_values,rules_conditions)
 	query_output=frappe.db.sql("""SELECT 
 									DN.name as dn_name,
 									SO.transaction_date as order_created_date,
@@ -240,17 +228,14 @@ def delivery_note_query(report_conditions,rules_conditions,rules_filter_values):
 									on DN_item.item_code =item.item_code 
 									where DN.docstatus=0 
 									{report_conditions} {rules_conditions} limit 1"""
-									.format(report_conditions=report_conditions,rules_conditions=rules_conditions),rules_filter_values,as_dict=1,debug=1)
+									.format(report_conditions=report_conditions,rules_conditions=rules_conditions),rules_filter_values,as_dict=1)
 	return query_output	    
 
 def compare_shipping_charges_against_courier_charges(self,method):
-	# print(frappe.form.dict["cmd"])
 	courier_manager=frappe.db.get_single_value('OMS Settings', 'courier_manager')
 	account_head=frappe.db.get_single_value('OMS Settings', 'shipping_charge_account')
-	print('-'*10,self.items[0].against_sales_order)
 	query_output=frappe.db.sql("""select tax_amount from `tabSales Taxes and Charges` 
-				where parent=%s and charge_type ='Actual'and account_head =%s""",(self.name,account_head),as_dict=1,debug=1) 		
-	print('query_output'*10,query_output,query_output[0].tax_amount,self.courier_charge_cf)
+				where parent=%s and charge_type ='Actual'and account_head =%s""",(self.name,account_head),as_dict=1) 		
 	if len(query_output)>0:
 		customer_shipping_fee=query_output[0].tax_amount
 		if self.courier_charge_cf>customer_shipping_fee:
@@ -278,7 +263,6 @@ def compare_shipping_charges_against_courier_charges(self,method):
 def override_charge_mismatch(args):
 	args = json.loads(args)
 	frappe.flags.compare_shipping_charges_against_courier_charges=True
-	print('pass')
 	doc = frappe.get_doc('Delivery Note', args.get("delivery_note"))
 	doc.submit()
 

@@ -52,7 +52,6 @@ def get_columns():
 	return columns		
 
 def get_conditions(filters):
-	print('filters',filters,type(filters))
 	conditions = ""
 	conditions += (
 		filters.get("order_created_date")
@@ -80,8 +79,6 @@ def sales_order_query_with_fulfilment_reuslt(filters):
 
 
 
-	print('11-'*100)
-	print('report_conditions',report_conditions)
 	query_output=frappe.db.sql(
 		"""
 -- Order Created Date, Client, Program, Country(Destination), Brand, Product Name
@@ -131,14 +128,11 @@ left outer join `tabDelivery Note Item` delivery_note_item
 on delivery_note_item.so_detail =SO_item.name
 where SO.docstatus=1 {report_conditions} 
 order by SO.name desc, SO_item.idx asc
-""".format(report_conditions=report_conditions),as_dict=1,debug=1)
-	print(query_output,'query_output')
+""".format(report_conditions=report_conditions),as_dict=1)
 	return query_output		
 
 #  for SO logic	
 def sales_order_query(report_conditions,rules_filter_values,rules_conditions):
-	print("report_conditions,rules_filter_values,rules_conditions")
-	print(report_conditions,rules_filter_values,rules_conditions)
 	query_output=frappe.db.sql(
 		"""
 -- Order Created Date, Client, Program, Country(Destination), Brand, Product Name
@@ -177,7 +171,7 @@ inner join  `tabItem` item
 on SO_item.item_code =item.item_code 
 inner join `tabItem Default` item_default 
 on item.item_code =item_default.parent  
-where SO.docstatus=0 {report_conditions} {rules_conditions} """.format(report_conditions=report_conditions,rules_conditions=rules_conditions),rules_filter_values,as_dict=1,debug=0)
+where SO.docstatus=0 {report_conditions} {rules_conditions} """.format(report_conditions=report_conditions,rules_conditions=rules_conditions),rules_filter_values,as_dict=1)
 	return query_output	
 
 
@@ -237,7 +231,6 @@ def find_warehouse_based_on_creiteria(filters,so_item_name):
 						in_values.append(value[assignment_field])
 					rules_conditions += ' ' + rule[assignment_field+'_logic'] + ' ' + doctype_field[assignment_field] + ' ' + rule[assignment_field+'_condition'] +' ({})' \
 						.format(' ,'.join(frappe.db.escape(i) for i in in_values)) 
-		print('rules_conditions',rules_conditions)
 		find_SO_matching_assignment_rule=sales_order_query(report_conditions,rules_filter_values,rules_conditions,)
 
 		if so_item_name==None:
@@ -256,7 +249,6 @@ def find_warehouse_based_on_creiteria(filters,so_item_name):
 					if data.si_item_hex_name not in unique_so_name_data:
 						result_data.append(data)
 						unique_so_name_data.append(data.si_item_hex_name)
-			print('-'*10,unique_so_name_data)
 		else:
 			for data in find_SO_matching_assignment_rule:
 				data.update({"warehouse":rule.for_warehouse})
@@ -269,9 +261,7 @@ def find_warehouse_based_on_creiteria(filters,so_item_name):
 		find_all_SO_irrespective_of_assignment_rule=sales_order_query(report_conditions,rules_filter_values,rules_conditions="and 1=1",)
 
 		for other_data in find_all_SO_irrespective_of_assignment_rule:
-			print('unique_so_name_data',unique_so_name_data)
 			if other_data.si_item_hex_name not in unique_so_name_data:
-				print('other_data.si_item_hex_name',other_data.si_item_hex_name)
 				other_data.update({"warehouse":""})
 				other_data.update({"applied_fulfilment_rule":"Manual"})				
 				result_data.append(other_data)
