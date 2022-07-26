@@ -2,6 +2,19 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Courier Assignment Rule', {
+	onload: function (frm) {
+		frm.set_query('courier_service_type', 'courier_assignment_detail', function (doc, cdt, cdn) {
+			const row = locals[cdt][cdn];
+			if (row.courier) {
+			  return {
+				query: "oms.oms.doctype.courier_assignment_rule.courier_assignment_rule.get_service_type",
+				filters: {
+					courier: row.courier
+				}
+			  }
+			}
+		  });
+	},
 	refresh: function (frm) {
 		hide_show_all_to_fields(frm)
 	},

@@ -1,3 +1,4 @@
+from distutils.log import debug
 import json
 import frappe
 from frappe import _
@@ -17,6 +18,8 @@ def set_courier_as_per_assignment_rule(self,method):
 				frappe.db.set_value('Delivery Note', self.name, 'courier_cf', courier_based_on_criteria[0].courier)
 				frappe.db.set_value('Delivery Note', self.name, 'courier_service_type_cf', courier_based_on_criteria[0].courier_service_type)
 				frappe.db.set_value('Delivery Note', self.name, 'courier_charge_cf', courier_based_on_criteria[0].rate or 0)
+				frappe.db.set_value('Delivery Note', self.name, 'courier_assignment_rule_cf', courier_based_on_criteria[0].courier_rule_name or None)
+				frappe.db.set_value('Delivery Note', self.name, 'courier_rate_card_cf', courier_based_on_criteria[0].courier_rate_card_name or None)
 			else:
 				frappe.msgprint(_("No matching courier details found for item {0}").format(frappe.bold(self.items[0].item_name)),alert=1,indicator="red")  
 
@@ -24,6 +27,7 @@ def set_courier_as_per_assignment_rule(self,method):
 def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 	result_data=[]
 	find_DN_matching_courier_rule=[]
+	# report_conditions=""
 	report_conditions = " AND DN_item.name = '%s' " % (dn_item_name)
 	courier_rules_field=['order_created_date','country','order_warehouse','client','program','brand','product','product_margin','length','width','height','volume','weight']
 	doctype_field =	{
@@ -83,12 +87,17 @@ def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 		for data in find_DN_matching_courier_rule:
 			if i==2:
 				break
-			frappe.msgprint(_("Courier Assignment Rule {0} is applied.").format(frappe.bold(rule.name)),alert=1,indicator="green")                
-			data.update({"courier":rule.supplier})
-			data.update({"courier_service_type":rule.courier_service_type})
-			rate=get_rate_based_on_courier_detail(item_weights,data.get('source_country'),data.get('destination_country'),rule.supplier,rule.courier_service_type)
+			# data.update({"courier":rule.supplier})
+			# data.update({"courier_service_type":rule.courier_service_type})
+			print(rule.name,rule)
+			rate=get_rate_based_on_courier_detail(item_weights=item_weights,source_country=data.get('source_country'),destination_country=data.get('destination_country'),rule_name=rule.name)
 			if len(rate)>0:
 				data.update({"rate":rate[0].rate})
+				data.update({"courier_service_type":rate[0].service_type})				
+				data.update({"courier":rate[0].courier})			
+				data.update({"courier_rule_name":rule.name})	
+				data.update({"courier_rate_card_name":rate[0].courier_rate_card_name})
+				frappe.msgprint(_("Courier Assignment Rule {0} is applied.").format(frappe.bold(rule.name)),alert=1,indicator="green")                
 			result_data.append(data)
 			i=i+1
 	# case B: not found A, find courier based on Courier Rate Card
@@ -103,12 +112,14 @@ def find_courier_based_on_creiteria(dn_item_name,total_net_weight):
 	return result_data	       
 
 #  case A : to find rate for courier assignment rule
-def get_rate_based_on_courier_detail(item_weights,source_country,destination_country,courier,courier_service_type):
+def get_rate_based_on_courier_detail(item_weights,source_country,destination_country,rule_name):
+	print('item_weights,source_country,destination_country,rule_name')
+	print(item_weights,source_country,destination_country,rule_name)
 	order_by_result=frappe.db.sql("""select 
 										case courier_criteria  
-										when 'Least Price' THEN 'weight_slab.rate'
-										when 'Least Duration' THEN 'courier_service_type.maximum_days'
-										when 'Tracking Available' THEN 'courier_service_type.is_tracking_available'
+										when 'Least Price' THEN 'weight_slab.rate ASC'
+										when 'Least Duration' THEN 'courier_service_type.maximum_days ASC'
+										when 'Tracking Available' THEN 'courier_service_type.is_tracking_available DESC'
 										END as courier_criteria
 										from `tabAuto Courier Assignment Priority`
 										order by idx ASC""",as_dict=1)
@@ -116,7 +127,7 @@ def get_rate_based_on_courier_detail(item_weights,source_country,destination_cou
 	order_by_condition="order by " +", ".join(order_by_list)
 
 	query_output=frappe.db.sql("""select weight_slab.upto_weight_in_kg ,weight_slab.rate ,courier_service_type.is_tracking_available , courier_service_type.maximum_days ,
-									courier_rate_card.courier,courier_rate_card.service_type,
+									courier_rate_card.name as courier_rate_card_name, courier_rate_card.courier,courier_rate_card.service_type,
 									courier_rate_card.source_country, courier_rate_card.destination_country, courier_rate_card.maximum_weight_allowed_in_kg, 
 									courier_rate_card.maximum_height_allowed_in_mm, courier_rate_card.maximum_width_allowed_in_mm, courier_rate_card.maximum_length_allowed_in_mm 
 									from `tabCourier Rate Card` courier_rate_card
@@ -124,23 +135,23 @@ def get_rate_based_on_courier_detail(item_weights,source_country,destination_cou
 									on courier_rate_card.service_type =courier_service_type.name 
 									inner join `tabCourier Rate Weight Slab` weight_slab 
 									on weight_slab.parent=courier_rate_card.name
+									left outer join (select courier , courier_service_type  from `tabCourier Assignment Detail` where parent = %s )as detail
+									on courier_rate_card.courier=detail.courier and courier_rate_card.service_type=detail.courier_service_type
 									{item_weights} 
 									and courier_rate_card.source_country =%s
-									and courier_rate_card.destination_country =%s
-									and courier_rate_card.courier=%s
-									and courier_rate_card.service_type=%s
+									and courier_rate_card.destination_country =%s									
 									{order_by_condition}
 									limit 1"""
-									.format(item_weights=item_weights,order_by_condition=order_by_condition),(source_country,destination_country,courier,courier_service_type),as_dict=1)
+									.format(item_weights=item_weights,order_by_condition=order_by_condition),(rule_name,source_country,destination_country),as_dict=1)
 	return query_output		
 
 # case B : find matching courier rate card
 def courier_rate_card_query(report_conditions,item_weights):
 	order_by_result=frappe.db.sql("""select 
 										case courier_criteria  
-										when 'Least Price' THEN 'courier_detail.rate'
-										when 'Least Duration' THEN 'courier_detail.maximum_days'
-										when 'Tracking Available' THEN 'courier_detail.is_tracking_available'
+										when 'Least Price' THEN 'courier_detail.rate ASC'
+										when 'Least Duration' THEN 'courier_detail.maximum_days ASC'
+										when 'Tracking Available' THEN 'courier_detail.is_tracking_available DESC'
 										END as courier_criteria
 										from `tabAuto Courier Assignment Priority`
 										order by idx ASC""",as_dict=1)
